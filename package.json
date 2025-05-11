@@ -1,0 +1,25 @@
+{
+  "name": "com.ludo.uspring",
+  "version": "1.0.0",
+  "displayName": "Ludo USpring",
+  "description": "A physically-based spring animation system for Unity that simulates damped harmonic oscillation, providing natural and responsive animations.",
+  "unity": "2021.3",
+  "documentationUrl": "https://github.com/sponticelli/Ludo-USpring/blob/main/Documentation/README.md",
+  "changelogUrl": "https://github.com/sponticelli/Ludo-USpring/blob/main/CHANGELOG.md",
+  "licensesUrl": "https://github.com/sponticelli/Ludo-USpring/blob/main/LICENSE",
+  "dependencies": {
+  },
+  "keywords": [
+    "ludo",
+    "spring",
+    "animation",
+    "physics",
+    "interpolation",
+    "damping",
+    "oscillation"
+  ],
+  "author": {
+    "name": "Sandro Ponticelli",
+    "url": "https://github.com/sponticelli"
+  }
+}
