@@ -2,7 +2,6 @@
     "name": "Ludo.USpring.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:1b9b12339683546f6ac63123ea65ef74",
         "GUID:d82dbd2543ac34c4db5c09e6d8cd30ec"
     ],
     "includePlatforms": [
