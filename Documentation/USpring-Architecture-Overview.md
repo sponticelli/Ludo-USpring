@@ -6,101 +6,99 @@ USpring is a physically-based spring animation system for Unity that simulates d
 
 This document provides a high-level overview of the USpring architecture, explaining the core components and how they interact.
 
-## Core Architecture
+## Architectural Layers
 
-USpring follows a layered architecture with the following main components:
+USpring follows a layered architecture with clear separation of concerns:
 
-1. **Core Spring Classes**: The foundation of the system, implementing the spring physics model
-2. **Spring Components**: Unity components that wrap the core springs for easy use in the Inspector
-3. **Spring Math**: The mathematical implementation of the spring physics simulation
-4. **Spring Events**: A system for responding to spring state changes
-5. **Spring Settings**: Global configuration for the spring system
+### 1. Core Interfaces
 
-### Layer 1: Core Spring Classes
+The foundation of USpring is a set of interfaces that define the contract for different spring types:
 
-The core spring classes are the foundation of the USpring system. They implement the spring physics model and provide the basic functionality for spring-based animation.
+- **`ISpring`**: Base interface for all spring types with common functionality
+- **`ISpringFloat`**, **`ISpringVector2`**, **`ISpringVector3`**, **`ISpringVector4`**: Type-specific interfaces
+- **`ISpringColor`**: Interface for color animation
+- **`ISpringRotation`**: Special interface for quaternion rotation with proper interpolation
 
-#### Key Classes:
+These interfaces enable a fluent API design and provide a consistent contract for all spring implementations.
 
-- **`Spring`**: The abstract base class for all spring types. Manages common spring properties like force (stiffness) and drag (damping).
-- **`SpringFloat`**: A single-dimensional spring for animating float values.
-- **`SpringVector2`**: A two-dimensional spring for animating Vector2 values.
-- **`SpringVector3`**: A three-dimensional spring for animating Vector3 values.
-- **`SpringVector4`**: A four-dimensional spring for animating Vector4 values.
-- **`SpringColor`**: A spring for animating Color values (internally uses SpringVector4).
-- **`SpringRotation`**: A special spring for animating Quaternion rotations with proper interpolation.
-- **`SpringValues`**: Represents a single spring-driven value with its own properties (target, current value, velocity, etc.).
+### 2. Core Spring Classes
 
-### Layer 2: Spring Components
+The core spring classes implement the interfaces and provide the basic functionality:
 
-Spring Components are Unity MonoBehaviour components that wrap the core springs, making them easy to use in the Unity Inspector and providing integration with Unity's GameObject system.
+- **`Spring`**: Abstract base class implementing `ISpring`
+- **`SpringFloat`**, **`SpringVector2`**, **`SpringVector3`**, **`SpringVector4`**: Type-specific implementations
+- **`SpringColor`**: Implementation for color animation
+- **`SpringRotation`**: Special implementation for quaternion rotation
+- **`SpringValues`**: Represents a single spring-driven value with its properties
+- **`SpringFactory`**: Factory class for creating spring instances with a fluent API
 
-#### Key Components:
+### 3. Physics System
 
-- **`SpringComponent`**: The abstract base class for all spring components.
-- **`TransformSpringComponent`**: Animates Transform properties (position, rotation, scale).
-- **`ColorSpringComponent`**: Animates colors of renderers or UI elements.
-- **`CamFovOrSizeSpringComponent`**: Animates camera field of view or orthographic size.
-- **`FloatSpringComponent`**: A general-purpose component for animating float values.
-- **`SpringPulse`**: Creates pulsing animations using springs.
+The physics system is responsible for the mathematical simulation of springs:
 
-### Layer 3: Physics Models
+- **`SpringMath`**: Coordinates the physics simulation
+- **`IPhysicsModel`**: Interface for physics models
+- **`SemiImplicitModel`**: Default model using semi-implicit Euler integration
+- **`AnalyticalModel`**: Alternative model for extreme force values
+- **`PhysicsParameters`**, **`IntegrationParameters`**, **`ClampingParameters`**: Parameter classes
+- **`PhysicsModelFactory`**: Factory for creating and selecting physics models
 
-The physics models implement different integration methods for updating spring values. Each model has its own strengths and weaknesses in terms of stability, accuracy, and performance.
+### 4. Unity Components
 
-#### Key Models:
+Unity components wrap the core springs for easy use in the Inspector:
 
-- **`SemiImplicitModel`**: Implements semi-implicit Euler integration, providing a good balance of performance and stability for most cases.
-- **`AnalyticalModel`**: Implements an analytical solution based on the damping ratio, providing better stability for extreme force values.
+- **`SpringComponent`**: Abstract base class for all spring components
+- **`TransformSpringComponent`**: Animates Transform properties
+- **`ColorSpringComponent`**: Animates colors
+- **`CamFovOrSizeSpringComponent`**: Animates camera properties
+- Many other specialized components for different use cases
 
-#### Key Features:
+### 5. Utility Systems
 
-- **Model Selection**: The `PhysicsModelFactory` automatically selects the most suitable model based on the physics parameters.
-- **Parameter Encapsulation**: Physics parameters are encapsulated in dedicated classes (`PhysicsParameters`, `IntegrationParameters`, `ClampingParameters`).
-- **Validation**: The `PhysicsValidator` ensures that physics parameters are valid.
-- **Error Handling**: Improved error handling with the `PhysicsException` class.
+Supporting systems that enhance the functionality:
 
-### Layer 4: Spring Math
-
-The `SpringMath` class coordinates the physics simulation by selecting the appropriate physics model and applying clamping. It acts as a bridge between the core spring classes and the physics models.
-
-### Layer 5: Spring Events
-
-The `SpringEvents` class provides a system for responding to spring state changes through events.
-
-#### Key Events:
-
-- **`OnTargetReached`**: Triggered when the spring reaches its target value.
-- **`OnCurrentValueChanged`**: Triggered when the spring's current value changes significantly.
-- **`OnClampingApplied`**: Triggered when clamping is applied to the spring's value.
-
-### Layer 6: Spring Settings
-
-The `SpringSettingsData` and `SpringSettingsProvider` classes provide global configuration for the spring system.
-
-#### Key Settings:
-
-- **`MaxForceBeforeAnalyticalIntegration`**: The threshold for switching from semi-implicit to analytical integration.
-- **`DoFixedUpdateRate`**: Whether to use a fixed update rate for spring simulation.
-- **`SpringFixedTimeStep`**: The fixed time step to use for spring simulation.
+- **`SpringEvents`**: Event system for responding to spring state changes
+- **`SpringSettingsData`** / **`SpringSettingsProvider`**: Global configuration
+- **`SpringSkeleton`** / **`SpringBone`**: Skeletal animation system
 
 ## Data Flow
 
-1. **Target Setting**: The target value is set either through code or by following a target object.
-2. **Spring Update**: The spring is updated using `SpringMath.UpdateSpring()`, which calculates new candidate values based on the current state, target, force, and drag.
-3. **Candidate Processing**: The candidate values are applied to the current values using `ProcessCandidateValue()`.
-4. **Event Checking**: Events are checked and triggered using `CheckEvents()`.
-5. **Value Application**: The current values are applied to the target object (e.g., Transform, Renderer).
+1. **Initialization**: Springs are created and initialized with initial values and parameters
+2. **Target Setting**: Target values are set through code or by following target objects
+3. **Physics Update**: Springs are updated using the appropriate physics model
+4. **Value Processing**: Candidate values are processed and applied
+5. **Event Triggering**: Events are triggered based on state changes
+6. **Value Application**: Current values are applied to Unity objects
+
+## Key Design Patterns
+
+USpring utilizes several design patterns:
+
+1. **Factory Pattern**: `SpringFactory` creates pre-configured springs
+2. **Strategy Pattern**: Different physics models implement the same interface
+3. **Decorator Pattern**: Springs can be configured with different behaviors
+4. **Observer Pattern**: Spring events notify subscribers of state changes
+5. **Dependency Injection**: `SpringSettingsProvider` provides global settings
 
 ## Extension Points
 
-USpring is designed to be extensible. Here are the main extension points:
+USpring is designed to be extensible through several mechanisms:
 
-1. **Creating Custom Spring Types**: Inherit from `Spring` to create new spring types for custom data structures.
-2. **Creating Custom Spring Components**: Inherit from `SpringComponent` to create new components that use springs in unique ways.
-3. **Custom Event Handling**: Subscribe to spring events to create custom responses to spring state changes.
-4. **Custom Physics Models**: Implement the `IPhysicsModel` interface to create custom integration methods.
-5. **Custom Parameter Classes**: Extend the parameter classes to add custom configuration options.
+1. **Custom Spring Types**: Inherit from `Spring` to create new spring types
+2. **Custom Components**: Inherit from `SpringComponent` to create new components
+3. **Custom Physics Models**: Implement `IPhysicsModel` to create new integration methods
+4. **Event Handling**: Subscribe to spring events for custom behaviors
+5. **Parameter Configuration**: Extend parameter classes for custom configurations
+
+## Performance Considerations
+
+USpring is designed for performance with several optimizations:
+
+1. **Model Selection**: Automatically selects the appropriate physics model
+2. **Parameter Caching**: Avoids creating new parameter objects on every update
+3. **Selective Updates**: Only updates enabled springs
+4. **Analytical Solution**: Uses a more stable solution for extreme cases
+5. **Error Handling**: Gracefully handles numerical instabilities
 
 ## Best Practices
 
@@ -109,7 +107,3 @@ USpring is designed to be extensible. Here are the main extension points:
 3. **Use Clamping When Needed**: Enable clamping for values with defined ranges (e.g., 0-1 for alpha).
 4. **Consider Update Timing**: Use `Update` for most visual elements, `FixedUpdate` for physics-related springs, and `LateUpdate` for camera or follow behaviors.
 5. **Use Events Sparingly**: Only enable events when you need to respond to spring state changes.
-
-## Conclusion
-
-USpring provides a powerful and flexible system for creating natural, physically-based animations in Unity. By understanding its architecture and following best practices, you can create responsive and organic animations for a wide range of use cases.
