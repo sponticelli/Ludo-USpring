@@ -1,6 +1,6 @@
 {
   "name": "com.liteninja.uspring",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "displayName": "Ludo USpring",
   "description": "A physically-based spring animation system for Unity that simulates damped harmonic oscillation, providing natural and responsive animations.",
   "unity": "2021.3",

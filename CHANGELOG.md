@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2024-12-19
+
+### Added
+- **Enhanced Custom Editors System** with comprehensive visual feedback and usability improvements
+- **Enhanced Property Drawers** with real-time preview, preset integration, and visual type indicators
+- **Spring Analyzer Window** for performance monitoring, debugging, and optimization
+- **Enhanced Preset Manager** with categorized presets, custom preset creation, and import/export
+- **Visual Spring Curve Editor** with interactive parameter adjustment and real-time analysis
+- **Enhanced Component Editor Base Class** for consistent advanced editor features
+- **Comprehensive Enhanced Editors Documentation** with usage guides and best practices
+
+### Enhanced Editor Features
+- Real-time spring curve visualization in property drawers
+- Interactive parameter adjustment with immediate visual feedback
+- Performance monitoring and optimization suggestions
+- Advanced debugging tools with runtime value monitoring
+- Categorized preset system (Built-in, UI Animation, Gameplay, Custom)
+- Visual spring curve analysis (settling time, overshoot, frequency)
+- Copy/paste functionality for spring parameters
+- Quick action buttons for common operations
+- Status indicators and color-coded spring types
+- Animation preview controls with time scrubbing
+
+### Improved
+- Editor usability with organized, collapsible sections
+- Visual feedback with color-coded headers and status indicators
+- Workflow efficiency with quick presets and bulk operations
+- Debugging capabilities with real-time monitoring tools
+- Documentation with comprehensive editor usage guides
+
 ## [1.1.0] - 2024-12-19
 
 ### Added
