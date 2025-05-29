@@ -118,112 +118,517 @@ namespace USpring.Components
 			return this;
 		}
 		public Vector3 GetForcePosition() => positionSpring.GetForce();
-		public void SetForcePosition(Vector3 force) => positionSpring.SetForce(force);
-		public void SetForcePosition(float force) => SetForcePosition(Vector3.one * force);
+
+		/// <summary>
+		/// Sets the force values for the position spring.
+		/// </summary>
+		/// <param name="force">The force vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetForcePosition(Vector3 force)
+		{
+			positionSpring.SetForce(force);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the force using a single float for all position axes.
+		/// </summary>
+		/// <param name="force">The force for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetForcePosition(float force) => SetForcePosition(Vector3.one * force);
+
 		public Vector3 GetDragPosition() => positionSpring.GetDrag();
-		public void SetDragPosition(Vector3 drag) => positionSpring.SetDrag(drag);
-		public void SetDragPosition(float drag) => SetDragPosition(Vector3.one * drag);
+
+		/// <summary>
+		/// Sets the drag values for the position spring.
+		/// </summary>
+		/// <param name="drag">The drag vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetDragPosition(Vector3 drag)
+		{
+			positionSpring.SetDrag(drag);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the drag using a single float for all position axes.
+		/// </summary>
+		/// <param name="drag">The drag for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetDragPosition(float drag) => SetDragPosition(Vector3.one * drag);
+
 		public float GetCommonForcePosition() => positionSpring.GetCommonForce();
 		public float GetCommonDragPosition() => positionSpring.GetCommonDrag();
-		public void SetCommonForcePosition(float force)
+
+		/// <summary>
+		/// Sets the common force (stiffness) value for position.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForcePosition(float force)
 		{
 			positionSpring.SetCommonForceAndDrag(true);
 			positionSpring.SetCommonForce(force);
+			return this;
 		}
-		public void SetCommonDragPosition(float drag)
+
+		/// <summary>
+		/// Sets the common drag (damping) value for position.
+		/// </summary>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonDragPosition(float drag)
 		{
 			positionSpring.SetCommonForceAndDrag(true);
 			positionSpring.SetCommonDrag(drag);
+			return this;
 		}
-		public void SetCommonForceAndDragPosition(float force, float drag)
+
+		/// <summary>
+		/// Sets both common force and drag values for position.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForceAndDragPosition(float force, float drag)
 		{
 			SetCommonForcePosition(force);
 			SetCommonDragPosition(drag);
+			return this;
 		}
-		public void SetMinValuesPosition(Vector3 minValue) => positionSpring.SetMinValues(minValue);
-		public void SetMinValuesPosition(float minValue) => SetMinValuesPosition(Vector3.one * minValue);
-		public void SetMaxValuesPosition(Vector3 maxValue) => positionSpring.SetMaxValues(maxValue);
-		public void SetMaxValuesPosition(float maxValue) => SetMaxValuesPosition(Vector3.one * maxValue);
-		public void SetClampCurrentValuesPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => positionSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
-		public void SetClampTargetPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => positionSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
-		public void StopSpringOnClampPosition(bool stopX, bool stopY, bool stopZ) => positionSpring.StopSpringOnClamp(stopX, stopY, stopZ);
+
+		/// <summary>
+		/// Sets the minimum values for position clamping.
+		/// </summary>
+		/// <param name="minValue">The minimum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMinValuesPosition(Vector3 minValue)
+		{
+			positionSpring.SetMinValues(minValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the minimum values using a single float for all position axes.
+		/// </summary>
+		/// <param name="minValue">The minimum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMinValuesPosition(float minValue) => SetMinValuesPosition(Vector3.one * minValue);
+
+		/// <summary>
+		/// Sets the maximum values for position clamping.
+		/// </summary>
+		/// <param name="maxValue">The maximum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMaxValuesPosition(Vector3 maxValue)
+		{
+			positionSpring.SetMaxValues(maxValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the maximum values using a single float for all position axes.
+		/// </summary>
+		/// <param name="maxValue">The maximum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMaxValuesPosition(float maxValue) => SetMaxValuesPosition(Vector3.one * maxValue);
+
+		/// <summary>
+		/// Sets clamping for current position values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <param name="clampTargetZ">Clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetClampCurrentValuesPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ)
+		{
+			positionSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets clamping for target position values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <param name="clampTargetZ">Clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetClampTargetPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ)
+		{
+			positionSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets stop on clamp per position axis.
+		/// </summary>
+		/// <param name="stopX">Stop on clamp X axis.</param>
+		/// <param name="stopY">Stop on clamp Y axis.</param>
+		/// <param name="stopZ">Stop on clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent StopSpringOnClampPosition(bool stopX, bool stopY, bool stopZ)
+		{
+			positionSpring.StopSpringOnClamp(stopX, stopY, stopZ);
+			return this;
+		}
 
 		public SpringEvents ScaleEvents => scaleSpring.springEvents;
 		public Vector3 GetTargetScale() => scaleSpring.GetTarget();
-		public void SetTargetScale(Vector3 target) => scaleSpring.SetTarget(target);
-		public void SetTargetScale(float target) => SetTargetScale(Vector3.one * target);
+
+		/// <summary>
+		/// Sets the target scale that the spring will move towards.
+		/// </summary>
+		/// <param name="target">The new target scale.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetScale(Vector3 target)
+		{
+			scaleSpring.SetTarget(target);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the target scale using a single float for all axes.
+		/// </summary>
+		/// <param name="target">The target value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetScale(float target) => SetTargetScale(Vector3.one * target);
+
 		public Vector3 GetCurrentValueScale() => scaleSpring.GetCurrentValue();
-		public void SetCurrentValueScale(Vector3 currentValues) => scaleSpring.SetCurrentValue(currentValues);
-		public void SetCurrentValueScale(float currentValues) => SetCurrentValueScale(Vector3.one * currentValues);
+
+		/// <summary>
+		/// Sets the current scale of the spring.
+		/// </summary>
+		/// <param name="currentValues">The new current scale.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValueScale(Vector3 currentValues)
+		{
+			scaleSpring.SetCurrentValue(currentValues);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the current scale using a single float for all axes.
+		/// </summary>
+		/// <param name="currentValues">The current value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValueScale(float currentValues) => SetCurrentValueScale(Vector3.one * currentValues);
+
 		public Vector3 GetVelocityScale() => scaleSpring.GetVelocity();
-		public void SetVelocityScale(Vector3 velocity) => scaleSpring.SetVelocity(velocity);
-		public void SetVelocityScale(float velocity) => SetVelocityScale(Vector3.one * velocity);
-		public void AddVelocityScale(Vector3 velocityToAdd) =>	scaleSpring.AddVelocity(velocityToAdd);
-		public void ReachEquilibriumScale() => scaleSpring.ReachEquilibrium();
+
+		/// <summary>
+		/// Sets the velocity of the scale spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetVelocityScale(Vector3 velocity)
+		{
+			scaleSpring.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the velocity using a single float for all scale axes.
+		/// </summary>
+		/// <param name="velocity">The velocity for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetVelocityScale(float velocity) => SetVelocityScale(Vector3.one * velocity);
+
+		/// <summary>
+		/// Adds velocity to the current scale spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent AddVelocityScale(Vector3 velocityToAdd)
+		{
+			scaleSpring.AddVelocity(velocityToAdd);
+			return this;
+		}
+
+		/// <summary>
+		/// Immediately sets the scale spring to its target value and stops all motion.
+		/// </summary>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent ReachEquilibriumScale()
+		{
+			scaleSpring.ReachEquilibrium();
+			return this;
+		}
 		public Vector3 GetForceScale() => scaleSpring.GetForce();
-		public void SetForceScale(Vector3 force) => scaleSpring.SetForce(force);
-		public void SetForceScale(float force) => SetForceScale(Vector3.one * force);
+
+		/// <summary>
+		/// Sets the force values for the scale spring.
+		/// </summary>
+		/// <param name="force">The force vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetForceScale(Vector3 force)
+		{
+			scaleSpring.SetForce(force);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the force using a single float for all scale axes.
+		/// </summary>
+		/// <param name="force">The force for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetForceScale(float force) => SetForceScale(Vector3.one * force);
+
 		public Vector3 GetDragScale() => scaleSpring.GetDrag();
-		public void SetDragScale(Vector3 drag) => scaleSpring.SetDrag(drag);
-		public void SetDragScale(float drag) => SetDragScale(Vector3.one * drag);
+
+		/// <summary>
+		/// Sets the drag values for the scale spring.
+		/// </summary>
+		/// <param name="drag">The drag vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetDragScale(Vector3 drag)
+		{
+			scaleSpring.SetDrag(drag);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the drag using a single float for all scale axes.
+		/// </summary>
+		/// <param name="drag">The drag for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetDragScale(float drag) => SetDragScale(Vector3.one * drag);
+
 		public float GetCommonForceScale() => scaleSpring.GetCommonForce();
 		public float GetCommonDragScale() => scaleSpring.GetCommonDrag();
-		public void SetCommonForceScale(float force)
+
+		/// <summary>
+		/// Sets the common force (stiffness) value for scale.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForceScale(float force)
 		{
 			scaleSpring.SetCommonForceAndDrag(true);
 			scaleSpring.SetCommonForce(force);
+			return this;
 		}
-		public void SetCommonDragScale(float drag)
+
+		/// <summary>
+		/// Sets the common drag (damping) value for scale.
+		/// </summary>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonDragScale(float drag)
 		{
 			scaleSpring.SetCommonForceAndDrag(true);
 			scaleSpring.SetCommonDrag(drag);
+			return this;
 		}
-		public void SetCommonForceAndDragScale(float force, float drag)
+
+		/// <summary>
+		/// Sets both common force and drag values for scale.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForceAndDragScale(float force, float drag)
 		{
 			SetCommonForceScale(force);
 			SetCommonDragScale(drag);
+			return this;
 		}
-		public void SetMinValuesScale(Vector3 minValue) => scaleSpring.SetMinValues(minValue);
-		public void SetMinValuesScale(float minValue) => SetMinValuesScale(Vector3.one * minValue);
-		public void SetMaxValuesScale(Vector3 maxValue) => scaleSpring.SetMaxValues(maxValue);
-		public void SetMaxValuesScale(float maxValue) => SetMaxValuesScale(Vector3.one * maxValue);
-		public void SetClampCurrentValuesScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => scaleSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
-		public void SetClampTargetScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => scaleSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
-		public void StopSpringOnClampScale(bool stopX, bool stopY, bool stopZ) => scaleSpring.StopSpringOnClamp(stopX, stopY, stopZ);
+
+		/// <summary>
+		/// Sets the minimum values for scale clamping.
+		/// </summary>
+		/// <param name="minValue">The minimum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMinValuesScale(Vector3 minValue)
+		{
+			scaleSpring.SetMinValues(minValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the minimum values using a single float for all scale axes.
+		/// </summary>
+		/// <param name="minValue">The minimum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMinValuesScale(float minValue) => SetMinValuesScale(Vector3.one * minValue);
+
+		/// <summary>
+		/// Sets the maximum values for scale clamping.
+		/// </summary>
+		/// <param name="maxValue">The maximum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMaxValuesScale(Vector3 maxValue)
+		{
+			scaleSpring.SetMaxValues(maxValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the maximum values using a single float for all scale axes.
+		/// </summary>
+		/// <param name="maxValue">The maximum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetMaxValuesScale(float maxValue) => SetMaxValuesScale(Vector3.one * maxValue);
+
+		/// <summary>
+		/// Sets clamping for current scale values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <param name="clampTargetZ">Clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetClampCurrentValuesScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ)
+		{
+			scaleSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets clamping for target scale values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <param name="clampTargetZ">Clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetClampTargetScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ)
+		{
+			scaleSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets stop on clamp per scale axis.
+		/// </summary>
+		/// <param name="stopX">Stop on clamp X axis.</param>
+		/// <param name="stopY">Stop on clamp Y axis.</param>
+		/// <param name="stopZ">Stop on clamp Z axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent StopSpringOnClampScale(bool stopX, bool stopY, bool stopZ)
+		{
+			scaleSpring.StopSpringOnClamp(stopX, stopY, stopZ);
+			return this;
+		}
 
 		public SpringEvents RotationEvents => rotationSpring.springEvents;
 		public Quaternion GetTargetRotation() => rotationSpring.GetTarget();
-		public void SetTargetRotation(Quaternion targetQuaternion)
+
+		/// <summary>
+		/// Sets the target rotation that the spring will move towards.
+		/// </summary>
+		/// <param name="targetQuaternion">The new target quaternion.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetRotation(Quaternion targetQuaternion)
 		{
 			rotationSpring.SetTarget(targetQuaternion);
+			return this;
 		}
-		public void SetTargetRotation(Vector3 targetEuler)
+
+		/// <summary>
+		/// Sets the target rotation that the spring will move towards.
+		/// </summary>
+		/// <param name="targetEuler">The new target euler angles.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetRotation(Vector3 targetEuler)
 		{
 			rotationSpring.SetTarget(targetEuler);
+			return this;
 		}
+
 		public Quaternion GetCurrentValueRotation() => rotationSpring.GetCurrentValue();
-		public void SetCurrentValueRotation(Quaternion currentQuaternion) => rotationSpring.SetCurrentValue(currentQuaternion);
-		public void SetCurrentValueRotation(Vector3 currentEuler) => rotationSpring.SetCurrentValue(currentEuler);
+
+		/// <summary>
+		/// Sets the current rotation of the spring.
+		/// </summary>
+		/// <param name="currentQuaternion">The new current quaternion.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValueRotation(Quaternion currentQuaternion)
+		{
+			rotationSpring.SetCurrentValue(currentQuaternion);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the current rotation of the spring.
+		/// </summary>
+		/// <param name="currentEuler">The new current euler angles.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValueRotation(Vector3 currentEuler)
+		{
+			rotationSpring.SetCurrentValue(currentEuler);
+			return this;
+		}
+
 		public Vector3 GetVelocityRotation() => rotationSpring.GetVelocity();
-		public void SetVelocityRotation(Vector3 velocity) => rotationSpring.SetVelocity(velocity);
-		public void AddVelocityRotation(Vector3 velocityToAdd) => rotationSpring.AddVelocity(velocityToAdd);
-		public void ReachEquilibriumRotation() => rotationSpring.ReachEquilibrium();
+
+		/// <summary>
+		/// Sets the velocity of the rotation spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetVelocityRotation(Vector3 velocity)
+		{
+			rotationSpring.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Adds velocity to the current rotation spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent AddVelocityRotation(Vector3 velocityToAdd)
+		{
+			rotationSpring.AddVelocity(velocityToAdd);
+			return this;
+		}
+
+		/// <summary>
+		/// Immediately sets the rotation spring to its target value and stops all motion.
+		/// </summary>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent ReachEquilibriumRotation()
+		{
+			rotationSpring.ReachEquilibrium();
+			return this;
+		}
+
 		public float GetCommonForceRotation() => rotationSpring.GetCommonForce();
 		public float GetCommonDragRotation() => rotationSpring.GetCommonDrag();
-		public void SetCommonForceRotation(float force)
+
+		/// <summary>
+		/// Sets the common force (stiffness) value for rotation.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForceRotation(float force)
 		{
 			rotationSpring.SetCommonForceAndDrag(true);
 			rotationSpring.SetCommonForce(force);
+			return this;
 		}
-		public void SetCommonDragRotation(float drag)
+
+		/// <summary>
+		/// Sets the common drag (damping) value for rotation.
+		/// </summary>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonDragRotation(float drag)
 		{
 			rotationSpring.SetCommonForceAndDrag(true);
 			rotationSpring.SetCommonDrag(drag);
+			return this;
 		}
-		public void SetCommonForceAndDragRotation(float force, float drag)
+
+		/// <summary>
+		/// Sets both common force and drag values for rotation.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCommonForceAndDragRotation(float force, float drag)
 		{
 			SetCommonForceRotation(force);
 			SetCommonDragRotation(drag);
+			return this;
 		}
 
 

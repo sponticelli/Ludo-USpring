@@ -7,59 +7,194 @@ namespace USpring.Components
     public partial class CanvasGroupSpringComponent : SpringComponent
     {
         [SerializeField] private SpringFloat alphaSpring = new SpringFloat();
-        
+
         [SerializeField] private CanvasGroup autoUpdatedCanvasGroup;
-        
+
         [Header("Blocks Raycasts & Interactable")]
         [SerializeField] private bool updateBlocksRaycasts = true;
         [SerializeField] private bool updateInteractable = true;
         [SerializeField] private float blocksRaycastsThreshold = 0.1f;
         [SerializeField] private float interactableThreshold = 0.1f;
-        
+
         public SpringEvents Events => alphaSpring.springEvents;
         public float GetTarget() => alphaSpring.GetTarget();
-        public void SetTarget(float target) => alphaSpring.SetTarget(target);
+
+        /// <summary>
+        /// Sets the target alpha that the spring will move towards.
+        /// </summary>
+        /// <param name="target">The new target alpha value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetTarget(float target)
+        {
+            alphaSpring.SetTarget(target);
+            return this;
+        }
+
         public float GetCurrentValue() => alphaSpring.GetCurrentValue();
-        public void SetCurrentValue(float currentValues)
+
+        /// <summary>
+        /// Sets the current alpha of the spring.
+        /// </summary>
+        /// <param name="currentValues">The new current alpha value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetCurrentValue(float currentValues)
         {
             alphaSpring.SetCurrentValue(currentValues);
             SetCurrentValueInternal(currentValues);
+            return this;
         }
+
         public float GetVelocity() => alphaSpring.GetVelocity();
-        public void SetVelocity(float velocity) => alphaSpring.SetVelocity(velocity);
-        public void AddVelocity(float velocityToAdd) => alphaSpring.AddVelocity(velocityToAdd);
+
+        /// <summary>
+        /// Sets the velocity of the alpha spring.
+        /// </summary>
+        /// <param name="velocity">The new velocity value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetVelocity(float velocity)
+        {
+            alphaSpring.SetVelocity(velocity);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds velocity to the current alpha spring velocity.
+        /// </summary>
+        /// <param name="velocityToAdd">The velocity to add.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent AddVelocity(float velocityToAdd)
+        {
+            alphaSpring.AddVelocity(velocityToAdd);
+            return this;
+        }
+
         public override void ReachEquilibrium()
         {
             base.ReachEquilibrium();
             ReachEquilibriumInternal();
         }
+
         public float GetForce() => alphaSpring.GetForce();
-        public void SetForce(float force) => alphaSpring.SetForce(force);
+
+        /// <summary>
+        /// Sets the force value for the alpha spring.
+        /// </summary>
+        /// <param name="force">The force value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetForce(float force)
+        {
+            alphaSpring.SetForce(force);
+            return this;
+        }
+
         public float GetDrag() => alphaSpring.GetDrag();
-        public void SetDrag(float drag) => alphaSpring.SetDrag(drag);
-        public void SetMinValues(float minValue) => alphaSpring.SetMinValue(minValue);
-        public void SetMaxValues(float maxValue) => alphaSpring.SetMaxValue(maxValue);
-        public void SetClampCurrentValues(bool clamp) => alphaSpring.SetClampCurrentValue(clamp);
-        public void SetClampTarget(bool clamp) => alphaSpring.SetClampTarget(clamp);
-        public void StopSpringOnClamp(bool stop) => alphaSpring.SetStopOnClamp(stop);
+
+        /// <summary>
+        /// Sets the drag value for the alpha spring.
+        /// </summary>
+        /// <param name="drag">The drag value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetDrag(float drag)
+        {
+            alphaSpring.SetDrag(drag);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the minimum value for alpha clamping.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetMinValues(float minValue)
+        {
+            alphaSpring.SetMinValue(minValue);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the maximum value for alpha clamping.
+        /// </summary>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetMaxValues(float maxValue)
+        {
+            alphaSpring.SetMaxValue(maxValue);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to clamp the current alpha value.
+        /// </summary>
+        /// <param name="clamp">Whether to clamp the current value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetClampCurrentValues(bool clamp)
+        {
+            alphaSpring.SetClampCurrentValue(clamp);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to clamp the target alpha value.
+        /// </summary>
+        /// <param name="clamp">Whether to clamp the target value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetClampTarget(bool clamp)
+        {
+            alphaSpring.SetClampTarget(clamp);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to stop the alpha spring when clamping occurs.
+        /// </summary>
+        /// <param name="stop">Whether to stop on clamp.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent StopSpringOnClamp(bool stop)
+        {
+            alphaSpring.SetStopOnClamp(stop);
+            return this;
+        }
+
         public float GetCommonForce() => alphaSpring.GetCommonForce();
         public float GetCommonDrag() => alphaSpring.GetCommonDrag();
-        public void SetCommonForce(float force)
+
+        /// <summary>
+        /// Sets the common force (stiffness) value for alpha.
+        /// </summary>
+        /// <param name="force">The force value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetCommonForce(float force)
         {
             alphaSpring.SetCommonForceAndDrag(true);
             alphaSpring.SetCommonForce(force);
+            return this;
         }
-        public void SetCommonDrag(float drag)
+
+        /// <summary>
+        /// Sets the common drag (damping) value for alpha.
+        /// </summary>
+        /// <param name="drag">The drag value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetCommonDrag(float drag)
         {
             alphaSpring.SetCommonForceAndDrag(true);
             alphaSpring.SetCommonDrag(drag);
+            return this;
         }
-        public void SetCommonForceAndDrag(float force, float drag)
+
+        /// <summary>
+        /// Sets both common force and drag values for alpha.
+        /// </summary>
+        /// <param name="force">The force value.</param>
+        /// <param name="drag">The drag value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public CanvasGroupSpringComponent SetCommonForceAndDrag(float force, float drag)
         {
             SetCommonForce(force);
             SetCommonDrag(drag);
+            return this;
         }
-        
+
         protected override void RegisterSprings()
         {
             RegisterSpring(alphaSpring);
@@ -86,13 +221,13 @@ namespace USpring.Components
         {
             float alpha = alphaSpring.GetCurrentValue();
             autoUpdatedCanvasGroup.alpha = alpha;
-            
+
             // Update blocksRaycasts and interactable based on alpha thresholds
             if (updateBlocksRaycasts)
             {
                 autoUpdatedCanvasGroup.blocksRaycasts = alpha >= blocksRaycastsThreshold;
             }
-            
+
             if (updateInteractable)
             {
                 autoUpdatedCanvasGroup.interactable = alpha >= interactableThreshold;
@@ -111,7 +246,7 @@ namespace USpring.Components
 
             return res;
         }
-        
+
         private void ReachEquilibriumInternal()
         {
             UpdateCanvasGroup();
@@ -128,18 +263,18 @@ namespace USpring.Components
             updateBlocksRaycasts = false; // Disable automatic update
             autoUpdatedCanvasGroup.blocksRaycasts = blocksRaycasts;
         }
-        
+
         public void SetInteractable(bool interactable)
         {
             updateInteractable = false; // Disable automatic update
             autoUpdatedCanvasGroup.interactable = interactable;
         }
-        
+
         public void SetBlocksRaycastsThreshold(float threshold)
         {
             blocksRaycastsThreshold = Mathf.Clamp01(threshold);
         }
-        
+
         public void SetInteractableThreshold(float threshold)
         {
             interactableThreshold = Mathf.Clamp01(threshold);
@@ -154,13 +289,13 @@ namespace USpring.Components
             {
                 autoUpdatedCanvasGroup = GetComponent<CanvasGroup>();
             }
-            
+
             // Set default clamping for alpha (0-1)
             alphaSpring.SetClampCurrentValue(true);
             alphaSpring.SetClampTarget(true);
             alphaSpring.SetMinValue(0f);
             alphaSpring.SetMaxValue(1f);
-            
+
             // Default spring values suitable for UI
             alphaSpring.SetCommonForceAndDrag(true);
             alphaSpring.SetCommonForce(80f);
