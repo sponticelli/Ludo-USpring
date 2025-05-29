@@ -116,6 +116,11 @@ namespace USpring.Components
 			return this;
 		}
 
+		public override void ReachEquilibrium()
+		{
+			base.ReachEquilibrium();
+		}
+
 		public override bool IsValidSpringComponent()
 		{
 			//No direct dependencies

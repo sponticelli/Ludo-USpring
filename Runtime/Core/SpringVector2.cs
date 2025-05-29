@@ -253,7 +253,7 @@ namespace USpring.Core
 			return this;
 		}
 
-		public bool IsClampTargetEnabled()
+		public new bool IsClampTargetEnabled()
 		{
 			return springValues[X].GetClampTarget() || springValues[Y].GetClampTarget();
 		}
@@ -264,7 +264,7 @@ namespace USpring.Core
 			return this;
 		}
 
-		public bool IsClampCurrentValueEnabled()
+		public new bool IsClampCurrentValueEnabled()
 		{
 			return springValues[X].GetClampCurrentValue() || springValues[Y].GetClampCurrentValue();
 		}

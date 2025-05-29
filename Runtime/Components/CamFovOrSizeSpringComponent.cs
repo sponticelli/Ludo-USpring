@@ -183,6 +183,12 @@ namespace USpring.Components
 			return this;
 		}
 
+		public override void ReachEquilibrium()
+		{
+			base.ReachEquilibrium();
+			UpdateCamera();
+		}
+
 		protected override void RegisterSprings()
 		{
 			RegisterSpring(fovSpring);

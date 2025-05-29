@@ -191,10 +191,18 @@ namespace USpring.Components
         /// <summary>
         /// Immediately sets the spring to its target value and stops all motion.
         /// </summary>
-        /// <returns>This component instance for method chaining.</returns>
-        public virtual Vector3SpringComponent ReachEquilibrium()
+        public override void ReachEquilibrium()
         {
-            spring?.ReachEquilibrium();
+            base.ReachEquilibrium();
+        }
+
+        /// <summary>
+        /// Immediately sets the spring to its target value and stops all motion.
+        /// </summary>
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent ReachEquilibriumAndReturn()
+        {
+            ReachEquilibrium();
             return this;
         }
 

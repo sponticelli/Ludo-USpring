@@ -227,6 +227,10 @@ namespace USpring.Components
 			return this;
 		}
 
+		public override void ReachEquilibrium()
+		{
+			base.ReachEquilibrium();
+		}
 
 		protected override void RegisterSprings()
 		{

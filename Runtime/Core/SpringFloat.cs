@@ -285,7 +285,7 @@ namespace USpring.Core
 		/// Gets whether target clamping is enabled.
 		/// </summary>
 		/// <returns>True if target clamping is enabled, false otherwise.</returns>
-		public bool IsClampTargetEnabled()
+		public new bool IsClampTargetEnabled()
 		{
 			return springValues[X].GetClampTarget();
 		}
@@ -294,7 +294,7 @@ namespace USpring.Core
 		/// Gets whether current value clamping is enabled.
 		/// </summary>
 		/// <returns>True if current value clamping is enabled, false otherwise.</returns>
-		public bool IsClampCurrentValueEnabled()
+		public new bool IsClampCurrentValueEnabled()
 		{
 			return springValues[X].GetClampCurrentValue();
 		}

@@ -185,6 +185,15 @@ namespace USpring.Components
             return true;
         }
 
+        /// <summary>
+        /// Immediately sets all springs (volume and pitch) to their target values and stops all motion.
+        /// </summary>
+        public override void ReachEquilibrium()
+        {
+            base.ReachEquilibrium();
+            UpdateAudioSource();
+        }
+
         public void Update()
         {
             if (!initialized || audioSource == null)

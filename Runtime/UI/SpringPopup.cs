@@ -51,7 +51,9 @@ namespace USpring.UI
         [SerializeField] private PopupState currentState = PopupState.Hidden;
 
         [Tooltip("Animation type to use")]
+#pragma warning disable 0414 // Field assigned but never used - used by editor
         [SerializeField] private AnimationType animationType = AnimationType.Scale;
+#pragma warning restore 0414
 
         [Tooltip("Preset animation styles")]
         [SerializeField] private PopupPreset preset = PopupPreset.Custom;

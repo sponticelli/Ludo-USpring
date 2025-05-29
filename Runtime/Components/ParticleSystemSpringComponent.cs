@@ -7,7 +7,7 @@ namespace USpring.Components
     public partial class ParticleSystemSpringComponent : SpringComponent
     {
         [SerializeField] private ParticleSystem autoUpdatedParticleSystem;
-        
+
         // Springs for various particle system properties
         [SerializeField] private SpringFloat emissionRateSpring = new SpringFloat();
         [SerializeField] private SpringFloat startLifetimeSpring = new SpringFloat();
@@ -15,7 +15,7 @@ namespace USpring.Components
         [SerializeField] private SpringFloat startSizeSpring = new SpringFloat();
         [SerializeField] private SpringColor startColorSpring = new SpringColor();
         [SerializeField] private SpringFloat simulationSpeedSpring = new SpringFloat();
-        
+
         // Toggle which properties to animate
         [SerializeField] private bool animateEmissionRate = true;
         [SerializeField] private bool animateStartLifetime = false;
@@ -23,15 +23,15 @@ namespace USpring.Components
         [SerializeField] private bool animateStartSize = false;
         [SerializeField] private bool animateStartColor = false;
         [SerializeField] private bool animateSimulationSpeed = false;
-        
+
         // Cache for particle system modules
         private ParticleSystem.MainModule mainModule;
         private ParticleSystem.EmissionModule emissionModule;
-        
+
         // Cached current emission rate for cases where emission is using curves/random between two constants
         private float cachedEmissionRate;
         private bool emissionModuleEnabled;
-        
+
         #region Emission Rate Spring Methods
         public SpringEvents EmissionRateEvents => emissionRateSpring.springEvents;
         public float GetTargetEmissionRate() => emissionRateSpring.GetTarget();
@@ -64,7 +64,7 @@ namespace USpring.Components
             SetCommonDragEmissionRate(drag);
         }
         #endregion
-        
+
         #region Start Lifetime Spring Methods
         public SpringEvents StartLifetimeEvents => startLifetimeSpring.springEvents;
         public float GetTargetStartLifetime() => startLifetimeSpring.GetTarget();
@@ -97,7 +97,7 @@ namespace USpring.Components
             SetCommonDragStartLifetime(drag);
         }
         #endregion
-        
+
         #region Start Speed Spring Methods
         public SpringEvents StartSpeedEvents => startSpeedSpring.springEvents;
         public float GetTargetStartSpeed() => startSpeedSpring.GetTarget();
@@ -130,7 +130,7 @@ namespace USpring.Components
             SetCommonDragStartSpeed(drag);
         }
         #endregion
-        
+
         #region Start Size Spring Methods
         public SpringEvents StartSizeEvents => startSizeSpring.springEvents;
         public float GetTargetStartSize() => startSizeSpring.GetTarget();
@@ -163,7 +163,7 @@ namespace USpring.Components
             SetCommonDragStartSize(drag);
         }
         #endregion
-        
+
         #region Start Color Spring Methods
         public SpringEvents StartColorEvents => startColorSpring.springEvents;
         public Color GetTargetStartColor() => startColorSpring.GetTargetColor();
@@ -198,7 +198,7 @@ namespace USpring.Components
             SetCommonDragStartColor(drag);
         }
         #endregion
-        
+
         #region Simulation Speed Spring Methods
         public SpringEvents SimulationSpeedEvents => simulationSpeedSpring.springEvents;
         public float GetTargetSimulationSpeed() => simulationSpeedSpring.GetTarget();
@@ -231,7 +231,7 @@ namespace USpring.Components
             SetCommonDragSimulationSpeed(drag);
         }
         #endregion
-        
+
         public override void Initialize()
         {
             if (autoUpdatedParticleSystem == null)
@@ -239,21 +239,21 @@ namespace USpring.Components
                 Debug.LogError($"ParticleSystemSpringComponent on {gameObject.name} has no ParticleSystem assigned!");
                 return;
             }
-            
+
             // Cache modules
             mainModule = autoUpdatedParticleSystem.main;
             emissionModule = autoUpdatedParticleSystem.emission;
             emissionModuleEnabled = emissionModule.enabled;
-            
+
             // Cache emission rate if module is enabled
             if (emissionModuleEnabled)
             {
                 cachedEmissionRate = emissionModule.rateOverTime.constant;
             }
-            
+
             base.Initialize();
         }
-        
+
         protected override void RegisterSprings()
         {
             if (animateEmissionRate) RegisterSpring(emissionRateSpring);
@@ -270,27 +270,27 @@ namespace USpring.Components
             {
                 emissionRateSpring.SetCurrentValue(cachedEmissionRate);
             }
-            
+
             if (animateStartLifetime)
             {
                 startLifetimeSpring.SetCurrentValue(mainModule.startLifetime.constant);
             }
-            
+
             if (animateStartSpeed)
             {
                 startSpeedSpring.SetCurrentValue(mainModule.startSpeed.constant);
             }
-            
+
             if (animateStartSize)
             {
                 startSizeSpring.SetCurrentValue(mainModule.startSize.constant);
             }
-            
+
             if (animateStartColor)
             {
                 startColorSpring.SetCurrentValue(mainModule.startColor.color);
             }
-            
+
             if (animateSimulationSpeed)
             {
                 simulationSpeedSpring.SetCurrentValue(mainModule.simulationSpeed);
@@ -303,37 +303,41 @@ namespace USpring.Components
             {
                 emissionRateSpring.SetTarget(cachedEmissionRate);
             }
-            
+
             if (animateStartLifetime)
             {
                 startLifetimeSpring.SetTarget(mainModule.startLifetime.constant);
             }
-            
+
             if (animateStartSpeed)
             {
                 startSpeedSpring.SetTarget(mainModule.startSpeed.constant);
             }
-            
+
             if (animateStartSize)
             {
                 startSizeSpring.SetTarget(mainModule.startSize.constant);
             }
-            
+
             if (animateStartColor)
             {
                 startColorSpring.SetTarget(mainModule.startColor.color);
             }
-            
+
             if (animateSimulationSpeed)
             {
                 simulationSpeedSpring.SetTarget(mainModule.simulationSpeed);
             }
         }
-        
+
         public void Update()
         {
             if (!initialized) return;
-            
+            UpdateParticleSystemProperties();
+        }
+
+        private void UpdateParticleSystemProperties()
+        {
             // Update ParticleSystem properties based on spring values
             if (animateEmissionRate && emissionModuleEnabled)
             {
@@ -341,39 +345,48 @@ namespace USpring.Components
                 rate.constant = emissionRateSpring.GetCurrentValue();
                 emissionModule.rateOverTime = rate;
             }
-            
+
             if (animateStartLifetime)
             {
                 var lifetime = mainModule.startLifetime;
                 lifetime.constant = startLifetimeSpring.GetCurrentValue();
                 mainModule.startLifetime = lifetime;
             }
-            
+
             if (animateStartSpeed)
             {
                 var speed = mainModule.startSpeed;
                 speed.constant = startSpeedSpring.GetCurrentValue();
                 mainModule.startSpeed = speed;
             }
-            
+
             if (animateStartSize)
             {
                 var size = mainModule.startSize;
                 size.constant = startSizeSpring.GetCurrentValue();
                 mainModule.startSize = size;
             }
-            
+
             if (animateStartColor)
             {
                 var color = mainModule.startColor;
                 color.color = startColorSpring.GetCurrentColor();
                 mainModule.startColor = color;
             }
-            
+
             if (animateSimulationSpeed)
             {
                 mainModule.simulationSpeed = simulationSpeedSpring.GetCurrentValue();
             }
+        }
+
+        /// <summary>
+        /// Immediately sets all springs to their target values and stops all motion.
+        /// </summary>
+        public override void ReachEquilibrium()
+        {
+            base.ReachEquilibrium();
+            UpdateParticleSystemProperties();
         }
 
         public override bool IsValidSpringComponent()
@@ -385,12 +398,12 @@ namespace USpring.Components
                 AddErrorReason($"{gameObject.name} autoUpdatedParticleSystem is null.");
                 res = false;
             }
-            
+
             // Check if at least one property is selected for animation
-            bool anyPropertyAnimated = animateEmissionRate || animateStartLifetime || 
-                                     animateStartSpeed || animateStartSize || 
+            bool anyPropertyAnimated = animateEmissionRate || animateStartLifetime ||
+                                     animateStartSpeed || animateStartSize ||
                                      animateStartColor || animateSimulationSpeed;
-            
+
             if (!anyPropertyAnimated)
             {
                 AddErrorReason($"{gameObject.name} has no particle system properties selected to animate.");
@@ -399,7 +412,7 @@ namespace USpring.Components
 
             return res;
         }
-        
+
         // Set animation toggle methods
         public void SetAnimateEmissionRate(bool animate)
         {
@@ -410,7 +423,7 @@ namespace USpring.Components
                 Initialize();
             }
         }
-        
+
         public void SetAnimateStartLifetime(bool animate)
         {
             animateStartLifetime = animate;
@@ -419,7 +432,7 @@ namespace USpring.Components
                 Initialize();
             }
         }
-        
+
         public void SetAnimateStartSpeed(bool animate)
         {
             animateStartSpeed = animate;
@@ -428,7 +441,7 @@ namespace USpring.Components
                 Initialize();
             }
         }
-        
+
         public void SetAnimateStartSize(bool animate)
         {
             animateStartSize = animate;
@@ -437,7 +450,7 @@ namespace USpring.Components
                 Initialize();
             }
         }
-        
+
         public void SetAnimateStartColor(bool animate)
         {
             animateStartColor = animate;
@@ -446,7 +459,7 @@ namespace USpring.Components
                 Initialize();
             }
         }
-        
+
         public void SetAnimateSimulationSpeed(bool animate)
         {
             animateSimulationSpeed = animate;
@@ -465,11 +478,11 @@ namespace USpring.Components
             {
                 autoUpdatedParticleSystem = GetComponent<ParticleSystem>();
             }
-            
+
             // Setup springs with reasonable defaults
             SetupDefaultSpringValues();
         }
-        
+
         private void SetupDefaultSpringValues()
         {
             // Default values for emission rate spring
@@ -478,28 +491,28 @@ namespace USpring.Components
             emissionRateSpring.SetCommonDrag(10f);
             emissionRateSpring.SetClampCurrentValue(true);
             emissionRateSpring.SetMinValue(0f);
-            
+
             // Default values for lifetime spring
             startLifetimeSpring.SetCommonForceAndDrag(true);
             startLifetimeSpring.SetCommonForce(80f);
             startLifetimeSpring.SetCommonDrag(8f);
             startLifetimeSpring.SetClampCurrentValue(true);
             startLifetimeSpring.SetMinValue(0f);
-            
+
             // Default values for speed spring
             startSpeedSpring.SetCommonForceAndDrag(true);
             startSpeedSpring.SetCommonForce(80f);
             startSpeedSpring.SetCommonDrag(8f);
             startSpeedSpring.SetClampCurrentValue(true);
             startSpeedSpring.SetMinValue(0f);
-            
+
             // Default values for size spring
             startSizeSpring.SetCommonForceAndDrag(true);
             startSizeSpring.SetCommonForce(80f);
             startSizeSpring.SetCommonDrag(8f);
             startSizeSpring.SetClampCurrentValue(true);
             startSizeSpring.SetMinValue(0f);
-            
+
             // Default values for color spring
             startColorSpring.SetCommonForceAndDrag(true);
             startColorSpring.SetCommonForce(80f);
@@ -507,7 +520,7 @@ namespace USpring.Components
             startColorSpring.SetClampCurrentValues(true, true, true, true);
             startColorSpring.SetMinValues(new Vector4(0, 0, 0, 0));
             startColorSpring.SetMaxValues(new Vector4(1, 1, 1, 1));
-            
+
             // Default values for simulation speed spring
             simulationSpeedSpring.SetCommonForceAndDrag(true);
             simulationSpeedSpring.SetCommonForce(80f);
@@ -520,14 +533,14 @@ namespace USpring.Components
         {
             // Only return the springs that are being animated
             System.Collections.Generic.List<Spring> springs = new System.Collections.Generic.List<Spring>();
-            
+
             if (animateEmissionRate) springs.Add(emissionRateSpring);
             if (animateStartLifetime) springs.Add(startLifetimeSpring);
             if (animateStartSpeed) springs.Add(startSpeedSpring);
             if (animateStartSize) springs.Add(startSizeSpring);
             if (animateStartColor) springs.Add(startColorSpring);
             if (animateSimulationSpeed) springs.Add(simulationSpeedSpring);
-            
+
             return springs.ToArray();
         }
 #endif

@@ -448,13 +448,13 @@ namespace USpring.Core
             return this;
         }
 
-        public bool IsClampTargetEnabled()
+        public new bool IsClampTargetEnabled()
         {
             return springValues[R].GetClampTarget() || springValues[G].GetClampTarget() ||
                    springValues[B].GetClampTarget() || springValues[A].GetClampTarget();
         }
 
-        public bool IsClampCurrentValueEnabled()
+        public new bool IsClampCurrentValueEnabled()
         {
             return springValues[R].GetClampCurrentValue() || springValues[G].GetClampCurrentValue() ||
                    springValues[B].GetClampCurrentValue() || springValues[A].GetClampCurrentValue();

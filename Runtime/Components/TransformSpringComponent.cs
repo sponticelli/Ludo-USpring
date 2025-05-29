@@ -631,6 +631,14 @@ namespace USpring.Components
 			return this;
 		}
 
+		/// <summary>
+		/// Immediately sets all springs (position, rotation, scale) to their target values and stops all motion.
+		/// </summary>
+		public override void ReachEquilibrium()
+		{
+			base.ReachEquilibrium();
+			UpdateTransform();
+		}
 
 		protected override void RegisterSprings()
 		{
