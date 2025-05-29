@@ -33,6 +33,7 @@ namespace USpring.Core
 
         private bool isValidSpringComponent;
         private string errorReason = string.Empty;
+        private bool hasValidatedThisFrame;
 
         [HideInInspector] public bool generalPropertiesUnfolded = true;
         [HideInInspector] public bool initialValuesUnfolded;
@@ -40,7 +41,7 @@ namespace USpring.Core
         private float springFixedTimeStep;
 
         protected bool initialized;
-        
+
         public bool IsInitialized => initialized;
 
         private void Awake()
@@ -62,7 +63,10 @@ namespace USpring.Core
             doFixedUpdateRate = SpringSettings.DoFixedUpdateRate;
             springFixedTimeStep = SpringSettings.SpringFixedTimeStep;
 
+            // Reset validation state
+            hasValidatedThisFrame = false;
             isValidSpringComponent = IsValidSpringComponent();
+
             if (!isValidSpringComponent)
             {
                 SpringComponentNotValid();
@@ -81,6 +85,16 @@ namespace USpring.Core
             }
 
             initialized = true;
+        }
+
+        /// <summary>
+        /// Forces revalidation of the component on the next frame.
+        /// Call this when component state changes that might affect validation.
+        /// </summary>
+        public void InvalidateValidation()
+        {
+            hasValidatedThisFrame = false;
+            isValidSpringComponent = false;
         }
 
         protected virtual void SetInitialValues()
@@ -143,14 +157,27 @@ namespace USpring.Core
                 return;
             }
 
-            isValidSpringComponent = IsValidSpringComponent();
-            if (!isValidSpringComponent)
+            // Only validate if we haven't validated yet or if validation is forced
+            if (!isValidSpringComponent && !hasValidatedThisFrame)
             {
-                SpringComponentNotValid();
-                return;
+                isValidSpringComponent = IsValidSpringComponent();
+                hasValidatedThisFrame = true;
+
+                if (!isValidSpringComponent)
+                {
+                    SpringComponentNotValid();
+                    return;
+                }
             }
 
             float deltaTime = useScaledTime ? Time.deltaTime : Time.unscaledDeltaTime;
+
+            // Use improved update timing logic
+            UpdateSpringsWithTiming(deltaTime);
+        }
+
+        private void UpdateSpringsWithTiming(float deltaTime)
+        {
             if (doFixedUpdateRate)
             {
                 int numIterations = GetNumberOfFixedSteps(deltaTime);
@@ -159,16 +186,7 @@ namespace USpring.Core
                     float remainingDeltaTime = deltaTime;
                     while (remainingDeltaTime > 0f)
                     {
-                        float correctedDeltaTime;
-                        if (remainingDeltaTime > springFixedTimeStep)
-                        {
-                            correctedDeltaTime = springFixedTimeStep;
-                        }
-                        else
-                        {
-                            correctedDeltaTime = remainingDeltaTime;
-                        }
-
+                        float correctedDeltaTime = Mathf.Min(remainingDeltaTime, springFixedTimeStep);
                         UpdateSprings(correctedDeltaTime);
                         remainingDeltaTime -= springFixedTimeStep;
                     }

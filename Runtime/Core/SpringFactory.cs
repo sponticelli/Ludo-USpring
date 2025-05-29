@@ -52,10 +52,10 @@ namespace USpring.Core
         /// <returns>A new SpringFloat instance.</returns>
         public static ISpringFloat CreateFloatWithForceAndDrag(float force, float drag)
         {
-            return (ISpringFloat)new SpringFloat()
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringFloat();
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringFloat)spring.Initialize();
         }
 
         /// <summary>
@@ -68,12 +68,12 @@ namespace USpring.Core
         /// <returns>A new SpringFloat instance.</returns>
         public static ISpringFloat CreateFloatWithForceAndDrag(float force, float drag, float target, float currentValue)
         {
-            return (ISpringFloat)new SpringFloat()
-                .SetTarget(target)
-                .SetCurrentValue(currentValue)
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringFloat();
+            spring.SetTarget(target);
+            spring.SetCurrentValue(currentValue);
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringFloat)spring.Initialize();
         }
 
         /// <summary>
@@ -120,10 +120,10 @@ namespace USpring.Core
         /// <returns>A new SpringVector3 instance.</returns>
         public static ISpringVector3 CreateVector3WithForceAndDrag(float force, float drag)
         {
-            return (ISpringVector3)new SpringVector3()
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringVector3();
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringVector3)spring.Initialize();
         }
 
         /// <summary>
@@ -136,12 +136,12 @@ namespace USpring.Core
         /// <returns>A new SpringVector3 instance.</returns>
         public static ISpringVector3 CreateVector3WithForceAndDrag(float force, float drag, Vector3 target, Vector3 currentValue)
         {
-            return (ISpringVector3)(new SpringVector3()
-                .SetTarget(target)
-                .SetCurrentValue(currentValue)
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize());
+            var spring = new SpringVector3();
+            spring.SetTarget(target);
+            spring.SetCurrentValue(currentValue);
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringVector3)spring.Initialize();
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace USpring.Core
         /// <returns>A new SpringRotation instance.</returns>
         public static ISpringRotation CreateRotationWithForceAndDrag(float force, float drag)
         {
-            return (ISpringRotation)new SpringRotation()
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringRotation();
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringRotation)spring.Initialize();
         }
 
         /// <summary>
@@ -204,12 +204,12 @@ namespace USpring.Core
         /// <returns>A new SpringRotation instance.</returns>
         public static ISpringRotation CreateRotationWithForceAndDrag(float force, float drag, Quaternion target, Quaternion currentValue)
         {
-            return (ISpringRotation)new SpringRotation()
-                .SetTarget(target)
-                .SetCurrentValue(currentValue)
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringRotation();
+            spring.SetTarget(target);
+            spring.SetCurrentValue(currentValue);
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringRotation)spring.Initialize();
         }
 
         /// <summary>
@@ -256,10 +256,10 @@ namespace USpring.Core
         /// <returns>A new SpringColor instance.</returns>
         public static ISpringColor CreateColorWithForceAndDrag(float force, float drag)
         {
-            return (ISpringColor)new SpringColor()
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringColor();
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringColor)spring.Initialize();
         }
 
         /// <summary>
@@ -272,12 +272,12 @@ namespace USpring.Core
         /// <returns>A new SpringColor instance.</returns>
         public static ISpringColor CreateColorWithForceAndDrag(float force, float drag, Color target, Color currentValue)
         {
-            return (ISpringColor)new SpringColor()
-                .SetTarget(target)
-                .SetCurrentValue(currentValue)
-                .SetCommonForce(force)
-                .SetCommonDrag(drag)
-                .Initialize();
+            var spring = new SpringColor();
+            spring.SetTarget(target);
+            spring.SetCurrentValue(currentValue);
+            spring.SetCommonForce(force);
+            spring.SetCommonDrag(drag);
+            return (ISpringColor)spring.Initialize();
         }
 
         /// <summary>
@@ -286,10 +286,10 @@ namespace USpring.Core
         /// <returns>A new SpringFloat instance configured for UI animations.</returns>
         public static ISpringFloat CreateUIPreset()
         {
-            return (ISpringFloat)new SpringFloat()
-                .SetCommonForce(200f)
-                .SetCommonDrag(15f)
-                .Initialize();
+            var spring = new SpringFloat();
+            spring.SetCommonForce(200f);
+            spring.SetCommonDrag(15f);
+            return (ISpringFloat)spring.Initialize();
         }
 
         /// <summary>
@@ -298,10 +298,10 @@ namespace USpring.Core
         /// <returns>A new SpringVector3 instance configured for camera animations.</returns>
         public static ISpringVector3 CreateCameraPreset()
         {
-            return (ISpringVector3)new SpringVector3()
-                .SetCommonForce(50f)
-                .SetCommonDrag(8f)
-                .Initialize();
+            var spring = new SpringVector3();
+            spring.SetCommonForce(50f);
+            spring.SetCommonDrag(8f);
+            return (ISpringVector3)spring.Initialize();
         }
 
         /// <summary>
@@ -310,10 +310,10 @@ namespace USpring.Core
         /// <returns>A new SpringFloat instance configured for bouncy animations.</returns>
         public static ISpringFloat CreateBouncyPreset()
         {
-            return (ISpringFloat)new SpringFloat()
-                .SetCommonForce(150f)
-                .SetCommonDrag(5f)
-                .Initialize();
+            var spring = new SpringFloat();
+            spring.SetCommonForce(150f);
+            spring.SetCommonDrag(5f);
+            return (ISpringFloat)spring.Initialize();
         }
 
         /// <summary>
@@ -322,10 +322,10 @@ namespace USpring.Core
         /// <returns>A new SpringFloat instance configured for smooth animations.</returns>
         public static ISpringFloat CreateSmoothPreset()
         {
-            return (ISpringFloat)new SpringFloat()
-                .SetCommonForce(50f)
-                .SetCommonDrag(10f)
-                .Initialize();
+            var spring = new SpringFloat();
+            spring.SetCommonForce(50f);
+            spring.SetCommonDrag(10f);
+            return (ISpringFloat)spring.Initialize();
         }
     }
 }
