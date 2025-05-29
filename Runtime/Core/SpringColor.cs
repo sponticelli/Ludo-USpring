@@ -44,7 +44,7 @@ namespace USpring.Core
                 springValues[B].GetTarget(),
                 springValues[A].GetTarget());
         }
-        
+
 
         public Color GetTargetColor()
         {
@@ -101,7 +101,7 @@ namespace USpring.Core
             springValues[A].SetCurrentValue(color.a);
             return this;
         }
-        
+
 
         public Vector4 GetVelocity()
         {
@@ -446,6 +446,18 @@ namespace USpring.Core
             SetCurrentValue(initialValue);
             SetTarget(target);
             return this;
+        }
+
+        public bool IsClampTargetEnabled()
+        {
+            return springValues[R].GetClampTarget() || springValues[G].GetClampTarget() ||
+                   springValues[B].GetClampTarget() || springValues[A].GetClampTarget();
+        }
+
+        public bool IsClampCurrentValueEnabled()
+        {
+            return springValues[R].GetClampCurrentValue() || springValues[G].GetClampCurrentValue() ||
+                   springValues[B].GetClampCurrentValue() || springValues[A].GetClampCurrentValue();
         }
 
         public ISpringColor Clone()

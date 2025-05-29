@@ -170,7 +170,7 @@ namespace USpring.Core
 			SetClampTargetByIndex(X, enabled);
 			return this;
 		}
-		
+
 
 		/// <summary>
 		/// Enables or disables current value clamping.
@@ -279,6 +279,24 @@ namespace USpring.Core
 			SetCurrentValue(initialValue);
 			SetTarget(target);
 			return this;
+		}
+
+		/// <summary>
+		/// Gets whether target clamping is enabled.
+		/// </summary>
+		/// <returns>True if target clamping is enabled, false otherwise.</returns>
+		public bool IsClampTargetEnabled()
+		{
+			return springValues[X].GetClampTarget();
+		}
+
+		/// <summary>
+		/// Gets whether current value clamping is enabled.
+		/// </summary>
+		/// <returns>True if current value clamping is enabled, false otherwise.</returns>
+		public bool IsClampCurrentValueEnabled()
+		{
+			return springValues[X].GetClampCurrentValue();
 		}
 
 		/// <summary>

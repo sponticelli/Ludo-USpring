@@ -47,7 +47,7 @@ namespace USpring.Core
 			springValues[Z].SetTarget(target.z);
 			return this;
 		}
-		
+
 
 		// Explicit interface implementation
 		public ISpringVector3 SetTarget(float value)
@@ -55,7 +55,7 @@ namespace USpring.Core
 			SetTarget(Vector3.one * value);
 			return this;
 		}
-		
+
 
 		public Vector3 GetCurrentValue()
 		{
@@ -71,8 +71,8 @@ namespace USpring.Core
 			springValues[Z].SetCurrentValue(value.z);
 			return this;
 		}
-		
-		
+
+
 		public ISpringVector3 SetCurrentValue(float value)
 		{
 			var vector = Vector3.one * value;
@@ -81,7 +81,7 @@ namespace USpring.Core
 			springValues[Z].SetCurrentValue(vector.z);
 			return this;
 		}
-		
+
 
 		public Vector3 GetVelocity()
 		{
@@ -341,7 +341,7 @@ namespace USpring.Core
 			SetClampTarget(enabled, enabled, enabled);
 			return this;
 		}
-		
+
 		public void SetClampCurrentValues(bool clampX, bool clampY, bool clampZ)
 		{
 			SetClampCurrentValueByIndex(X, clampX);
@@ -424,6 +424,16 @@ namespace USpring.Core
 			SetCurrentValue(initialValue);
 			SetTarget(target);
 			return this;
+		}
+
+		public bool IsClampTargetEnabled()
+		{
+			return springValues[X].GetClampTarget() || springValues[Y].GetClampTarget() || springValues[Z].GetClampTarget();
+		}
+
+		public bool IsClampCurrentValueEnabled()
+		{
+			return springValues[X].GetClampCurrentValue() || springValues[Y].GetClampCurrentValue() || springValues[Z].GetClampCurrentValue();
 		}
 
 		public ISpringVector3 Clone()
