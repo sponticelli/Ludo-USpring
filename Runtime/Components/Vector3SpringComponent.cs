@@ -115,17 +115,20 @@ namespace USpring.Components
         /// Sets the target value that the spring will move towards.
         /// </summary>
         /// <param name="target">The new target value.</param>
-        public virtual void SetTarget(Vector3 target)
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent SetTarget(Vector3 target)
         {
             targetValue = target;
             spring?.SetTarget(target);
+            return this;
         }
 
         /// <summary>
         /// Sets the target value using a single float for all axes.
         /// </summary>
         /// <param name="target">The target value for all axes.</param>
-        public void SetTarget(float target) => SetTarget(Vector3.one * target);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetTarget(float target) => SetTarget(Vector3.one * target);
 
         /// <summary>
         /// Gets the current animated value of the spring.
@@ -136,17 +139,20 @@ namespace USpring.Components
         /// Sets the current value of the spring.
         /// </summary>
         /// <param name="currentValue">The new current value.</param>
-        public virtual void SetCurrentValue(Vector3 currentValue)
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent SetCurrentValue(Vector3 currentValue)
         {
             initialValue = currentValue;
             spring?.SetCurrentValue(currentValue);
+            return this;
         }
 
         /// <summary>
         /// Sets the current value using a single float for all axes.
         /// </summary>
         /// <param name="currentValue">The current value for all axes.</param>
-        public void SetCurrentValue(float currentValue) => SetCurrentValue(Vector3.one * currentValue);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetCurrentValue(float currentValue) => SetCurrentValue(Vector3.one * currentValue);
 
         /// <summary>
         /// Gets the current velocity of the spring.
@@ -157,30 +163,47 @@ namespace USpring.Components
         /// Sets the velocity of the spring.
         /// </summary>
         /// <param name="velocity">The new velocity value.</param>
-        public virtual void SetVelocity(Vector3 velocity) => spring?.SetVelocity(velocity);
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent SetVelocity(Vector3 velocity)
+        {
+            spring?.SetVelocity(velocity);
+            return this;
+        }
 
         /// <summary>
         /// Sets the velocity using a single float for all axes.
         /// </summary>
         /// <param name="velocity">The velocity for all axes.</param>
-        public void SetVelocity(float velocity) => SetVelocity(Vector3.one * velocity);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetVelocity(float velocity) => SetVelocity(Vector3.one * velocity);
 
         /// <summary>
         /// Adds velocity to the current spring velocity.
         /// </summary>
         /// <param name="velocity">The velocity to add.</param>
-        public virtual void AddVelocity(Vector3 velocity) => spring?.AddVelocity(velocity);
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent AddVelocity(Vector3 velocity)
+        {
+            spring?.AddVelocity(velocity);
+            return this;
+        }
 
         /// <summary>
         /// Immediately sets the spring to its target value and stops all motion.
         /// </summary>
-        public virtual void ReachEquilibrium() => spring?.ReachEquilibrium();
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual Vector3SpringComponent ReachEquilibrium()
+        {
+            spring?.ReachEquilibrium();
+            return this;
+        }
 
         /// <summary>
         /// Sets the common force for all axes.
         /// </summary>
         /// <param name="force">The force value.</param>
-        public void SetCommonForce(float force)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetCommonForce(float force)
         {
             commonForce = force;
             if (spring != null && useCommonForceAndDrag)
@@ -188,13 +211,15 @@ namespace USpring.Components
                 spring.SetCommonForceAndDrag(true);
                 spring.SetCommonForce(force);
             }
+            return this;
         }
 
         /// <summary>
         /// Sets the common drag for all axes.
         /// </summary>
         /// <param name="drag">The drag value.</param>
-        public void SetCommonDrag(float drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetCommonDrag(float drag)
         {
             commonDrag = drag;
             if (spring != null && useCommonForceAndDrag)
@@ -202,6 +227,7 @@ namespace USpring.Components
                 spring.SetCommonForceAndDrag(true);
                 spring.SetCommonDrag(drag);
             }
+            return this;
         }
 
         /// <summary>
@@ -209,10 +235,12 @@ namespace USpring.Components
         /// </summary>
         /// <param name="force">The force value.</param>
         /// <param name="drag">The drag value.</param>
-        public void SetCommonForceAndDrag(float force, float drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetCommonForceAndDrag(float force, float drag)
         {
             SetCommonForce(force);
             SetCommonDrag(drag);
+            return this;
         }
 
         /// <summary>
@@ -228,16 +256,19 @@ namespace USpring.Components
         /// Sets the force values.
         /// </summary>
         /// <param name="force">The force vector.</param>
-        public void SetForce(Vector3 force)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetForce(Vector3 force)
         {
             spring?.SetForce(force);
+            return this;
         }
 
         /// <summary>
         /// Sets the force using a single float for all axes.
         /// </summary>
         /// <param name="force">The force for all axes.</param>
-        public void SetForce(float force) => SetForce(Vector3.one * force);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetForce(float force) => SetForce(Vector3.one * force);
 
         /// <summary>
         /// Gets the current drag values.
@@ -252,16 +283,19 @@ namespace USpring.Components
         /// Sets the drag values.
         /// </summary>
         /// <param name="drag">The drag vector.</param>
-        public void SetDrag(Vector3 drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetDrag(Vector3 drag)
         {
             spring?.SetDrag(drag);
+            return this;
         }
 
         /// <summary>
         /// Sets the drag using a single float for all axes.
         /// </summary>
         /// <param name="drag">The drag for all axes.</param>
-        public void SetDrag(float drag) => SetDrag(Vector3.one * drag);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetDrag(float drag) => SetDrag(Vector3.one * drag);
 
         /// <summary>
         /// Gets the common force value.
@@ -285,33 +319,39 @@ namespace USpring.Components
         /// Sets the minimum values for clamping.
         /// </summary>
         /// <param name="min">The minimum values.</param>
-        public void SetMinValues(Vector3 min)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetMinValues(Vector3 min)
         {
             minValues = min;
             spring?.SetMinValues(min);
+            return this;
         }
 
         /// <summary>
         /// Sets the minimum values using a single float for all axes.
         /// </summary>
         /// <param name="min">The minimum value for all axes.</param>
-        public void SetMinValues(float min) => SetMinValues(Vector3.one * min);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetMinValues(float min) => SetMinValues(Vector3.one * min);
 
         /// <summary>
         /// Sets the maximum values for clamping.
         /// </summary>
         /// <param name="max">The maximum values.</param>
-        public void SetMaxValues(Vector3 max)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetMaxValues(Vector3 max)
         {
             maxValues = max;
             spring?.SetMaxValues(max);
+            return this;
         }
 
         /// <summary>
         /// Sets the maximum values using a single float for all axes.
         /// </summary>
         /// <param name="max">The maximum value for all axes.</param>
-        public void SetMaxValues(float max) => SetMaxValues(Vector3.one * max);
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetMaxValues(float max) => SetMaxValues(Vector3.one * max);
 
         /// <summary>
         /// Sets clamping for current values per axis.
@@ -319,9 +359,11 @@ namespace USpring.Components
         /// <param name="clampX">Clamp X axis.</param>
         /// <param name="clampY">Clamp Y axis.</param>
         /// <param name="clampZ">Clamp Z axis.</param>
-        public void SetClampCurrentValues(bool clampX, bool clampY, bool clampZ)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetClampCurrentValues(bool clampX, bool clampY, bool clampZ)
         {
             spring?.SetClampCurrentValues(clampX, clampY, clampZ);
+            return this;
         }
 
         /// <summary>
@@ -330,9 +372,11 @@ namespace USpring.Components
         /// <param name="clampX">Clamp X axis.</param>
         /// <param name="clampY">Clamp Y axis.</param>
         /// <param name="clampZ">Clamp Z axis.</param>
-        public void SetClampTarget(bool clampX, bool clampY, bool clampZ)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent SetClampTarget(bool clampX, bool clampY, bool clampZ)
         {
             spring?.SetClampTarget(clampX, clampY, clampZ);
+            return this;
         }
 
         /// <summary>
@@ -341,10 +385,12 @@ namespace USpring.Components
         /// <param name="stopX">Stop on clamp X axis.</param>
         /// <param name="stopY">Stop on clamp Y axis.</param>
         /// <param name="stopZ">Stop on clamp Z axis.</param>
-        public void StopSpringOnClamp(bool stopX, bool stopY, bool stopZ)
+        /// <returns>This component instance for method chaining.</returns>
+        public Vector3SpringComponent StopSpringOnClamp(bool stopX, bool stopY, bool stopZ)
         {
             stopOnClamp = new Vector3(stopX ? 1 : 0, stopY ? 1 : 0, stopZ ? 1 : 0);
             spring?.StopSpringOnClamp(stopX, stopY, stopZ);
+            return this;
         }
 
         public override bool IsValidSpringComponent()

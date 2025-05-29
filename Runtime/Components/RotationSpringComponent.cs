@@ -10,38 +10,112 @@ namespace USpring.Components
 
 		public SpringEvents Events => springRotation.springEvents;
 		public Quaternion GetTarget() => springRotation.GetTarget();
-		public void SetTarget(Quaternion targetQuaternion)
+		/// <summary>
+		/// Sets the target value that the spring will move towards.
+		/// </summary>
+		/// <param name="targetQuaternion">The new target quaternion.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetTarget(Quaternion targetQuaternion)
 		{
 			springRotation.SetTarget(targetQuaternion);
+			return this;
 		}
-		public void SetTarget(Vector3 targetEuler)
+
+		/// <summary>
+		/// Sets the target value that the spring will move towards.
+		/// </summary>
+		/// <param name="targetEuler">The new target euler angles.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetTarget(Vector3 targetEuler)
 		{
 			springRotation.SetTarget(targetEuler);
+			return this;
 		}
 		public Quaternion GetCurrentValue() => springRotation.GetCurrentValue();
-		public void SetCurrentValue(Quaternion currentQuaternion) => springRotation.SetCurrentValue(currentQuaternion);
-		public void SetCurrentValue(Vector3 currentEuler) => springRotation.SetCurrentValue(currentEuler);
+		/// <summary>
+		/// Sets the current value of the spring.
+		/// </summary>
+		/// <param name="currentQuaternion">The new current quaternion.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetCurrentValue(Quaternion currentQuaternion)
+		{
+			springRotation.SetCurrentValue(currentQuaternion);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the current value of the spring.
+		/// </summary>
+		/// <param name="currentEuler">The new current euler angles.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetCurrentValue(Vector3 currentEuler)
+		{
+			springRotation.SetCurrentValue(currentEuler);
+			return this;
+		}
+
 		public Vector3 GetVelocity() => springRotation.GetVelocity();
-		public void SetVelocity(Vector3 velocity) => springRotation.SetVelocity(velocity);
-		public void AddVelocity(Vector3 velocityToAdd) => springRotation.AddVelocity(velocityToAdd);
+
+		/// <summary>
+		/// Sets the velocity of the spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetVelocity(Vector3 velocity)
+		{
+			springRotation.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Adds velocity to the current spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent AddVelocity(Vector3 velocityToAdd)
+		{
+			springRotation.AddVelocity(velocityToAdd);
+			return this;
+		}
 		public float GetCommonForce() => springRotation.GetCommonForce();
 		public float GetCommonDrag() => springRotation.GetCommonDrag();
-		public void SetCommonForce(float force)
+		/// <summary>
+		/// Sets the common force (stiffness) value.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetCommonForce(float force)
 		{
 			springRotation.SetCommonForceAndDrag(true);
 			springRotation.SetCommonForce(force);
+			return this;
 		}
-		public void SetCommonDrag(float drag)
+
+		/// <summary>
+		/// Sets the common drag (damping) value.
+		/// </summary>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetCommonDrag(float drag)
 		{
 			springRotation.SetCommonForceAndDrag(true);
 			springRotation.SetCommonDrag(drag);
+			return this;
 		}
-		public void SetCommonForceAndDrag(float force, float drag)
+
+		/// <summary>
+		/// Sets both common force and drag values.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public RotationSpringComponent SetCommonForceAndDrag(float force, float drag)
 		{
 			SetCommonForce(force);
 			SetCommonDrag(drag);
+			return this;
 		}
-		
+
 		public override bool IsValidSpringComponent()
 		{
 			//No direct dependencies

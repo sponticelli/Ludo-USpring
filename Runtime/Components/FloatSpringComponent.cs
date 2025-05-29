@@ -107,10 +107,12 @@ namespace USpring.Components
         /// Sets the target value that the spring will move towards.
         /// </summary>
         /// <param name="target">The new target value.</param>
-        public virtual void SetTarget(float target)
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual FloatSpringComponent SetTarget(float target)
         {
             targetValue = target;
             spring?.SetTarget(target);
+            return this;
         }
 
         /// <summary>
@@ -122,10 +124,12 @@ namespace USpring.Components
         /// Sets the current value of the spring.
         /// </summary>
         /// <param name="currentValue">The new current value.</param>
-        public virtual void SetCurrentValue(float currentValue)
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual FloatSpringComponent SetCurrentValue(float currentValue)
         {
             initialValue = currentValue;
             spring?.SetCurrentValue(currentValue);
+            return this;
         }
 
         /// <summary>
@@ -137,24 +141,40 @@ namespace USpring.Components
         /// Sets the velocity of the spring.
         /// </summary>
         /// <param name="velocity">The new velocity value.</param>
-        public virtual void SetVelocity(float velocity) => spring?.SetVelocity(velocity);
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual FloatSpringComponent SetVelocity(float velocity)
+        {
+            spring?.SetVelocity(velocity);
+            return this;
+        }
 
         /// <summary>
         /// Adds velocity to the current spring velocity.
         /// </summary>
         /// <param name="velocity">The velocity to add.</param>
-        public virtual void AddVelocity(float velocity) => spring?.AddVelocity(velocity);
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual FloatSpringComponent AddVelocity(float velocity)
+        {
+            spring?.AddVelocity(velocity);
+            return this;
+        }
 
         /// <summary>
         /// Immediately sets the spring to its target value and stops all motion.
         /// </summary>
-        public virtual void ReachEquilibrium() => spring?.ReachEquilibrium();
+        /// <returns>This component instance for method chaining.</returns>
+        public virtual FloatSpringComponent ReachEquilibrium()
+        {
+            spring?.ReachEquilibrium();
+            return this;
+        }
 
         /// <summary>
         /// Sets the common force (stiffness) value.
         /// </summary>
         /// <param name="force">The force value.</param>
-        public void SetCommonForce(float force)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetCommonForce(float force)
         {
             commonForce = force;
             if (spring != null && useCommonForceAndDrag)
@@ -162,13 +182,15 @@ namespace USpring.Components
                 spring.SetCommonForceAndDrag(true);
                 spring.SetCommonForce(force);
             }
+            return this;
         }
 
         /// <summary>
         /// Sets the common drag (damping) value.
         /// </summary>
         /// <param name="drag">The drag value.</param>
-        public void SetCommonDrag(float drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetCommonDrag(float drag)
         {
             commonDrag = drag;
             if (spring != null && useCommonForceAndDrag)
@@ -176,6 +198,7 @@ namespace USpring.Components
                 spring.SetCommonForceAndDrag(true);
                 spring.SetCommonDrag(drag);
             }
+            return this;
         }
 
         /// <summary>
@@ -183,10 +206,12 @@ namespace USpring.Components
         /// </summary>
         /// <param name="force">The force value.</param>
         /// <param name="drag">The drag value.</param>
-        public void SetCommonForceAndDrag(float force, float drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetCommonForceAndDrag(float force, float drag)
         {
             SetCommonForce(force);
             SetCommonDrag(drag);
+            return this;
         }
 
         /// <summary>
@@ -220,9 +245,11 @@ namespace USpring.Components
         /// Sets the force value.
         /// </summary>
         /// <param name="force">The force value.</param>
-        public void SetForce(float force)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetForce(float force)
         {
             spring?.SetForce(force);
+            return this;
         }
 
         /// <summary>
@@ -238,59 +265,71 @@ namespace USpring.Components
         /// Sets the drag value.
         /// </summary>
         /// <param name="drag">The drag value.</param>
-        public void SetDrag(float drag)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetDrag(float drag)
         {
             spring?.SetDrag(drag);
+            return this;
         }
 
         /// <summary>
         /// Sets the minimum value for clamping.
         /// </summary>
         /// <param name="min">The minimum value.</param>
-        public void SetMinValues(float min)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetMinValues(float min)
         {
             minValue = min;
             spring?.SetMinValue(min);
+            return this;
         }
 
         /// <summary>
         /// Sets the maximum value for clamping.
         /// </summary>
         /// <param name="max">The maximum value.</param>
-        public void SetMaxValues(float max)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetMaxValues(float max)
         {
             maxValue = max;
             spring?.SetMaxValue(max);
+            return this;
         }
 
         /// <summary>
         /// Sets whether to clamp the current value.
         /// </summary>
         /// <param name="clamp">Whether to clamp the current value.</param>
-        public void SetClampCurrentValues(bool clamp)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetClampCurrentValues(bool clamp)
         {
             clampCurrentValue = clamp;
             spring?.SetClampCurrentValue(clamp);
+            return this;
         }
 
         /// <summary>
         /// Sets whether to clamp the target value.
         /// </summary>
         /// <param name="clamp">Whether to clamp the target value.</param>
-        public void SetClampTarget(bool clamp)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent SetClampTarget(bool clamp)
         {
             clampTarget = clamp;
             spring?.SetClampTarget(clamp);
+            return this;
         }
 
         /// <summary>
         /// Sets whether to stop the spring when clamping occurs.
         /// </summary>
         /// <param name="stop">Whether to stop on clamp.</param>
-        public void StopSpringOnClamp(bool stop)
+        /// <returns>This component instance for method chaining.</returns>
+        public FloatSpringComponent StopSpringOnClamp(bool stop)
         {
             stopOnClamp = stop;
             spring?.SetStopOnClamp(stop);
+            return this;
         }
 
         public override bool IsValidSpringComponent()

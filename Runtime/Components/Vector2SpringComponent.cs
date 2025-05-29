@@ -6,25 +6,116 @@ namespace USpring.Components
 	[AddComponentMenu("Ludo/USpring/Components/Vector2 Spring")]
 	public partial class Vector2SpringComponent : SpringComponent
 	{
-		[SerializeField] private SpringVector2 springVector2 = new SpringVector2(); 
+		[SerializeField] private SpringVector2 springVector2 = new SpringVector2();
 
 		public SpringEvents Events => springVector2.springEvents;
 		public Vector2 GetTarget() => springVector2.GetTarget();
-		public void SetTarget(Vector2 target) => springVector2.SetTarget(target);
-		public void SetTarget(float target) => SetTarget(Vector2.one * target);
+		/// <summary>
+		/// Sets the target value that the spring will move towards.
+		/// </summary>
+		/// <param name="target">The new target value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetTarget(Vector2 target)
+		{
+			springVector2.SetTarget(target);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the target value using a single float for all axes.
+		/// </summary>
+		/// <param name="target">The target value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetTarget(float target) => SetTarget(Vector2.one * target);
+
 		public Vector2 GetCurrentValue() => springVector2.GetCurrentValue();
-		public void SetCurrentValue(Vector2 currentValues) => springVector2.SetCurrentValue(currentValues);
-		public void SetCurrentValue(float currentValues) => SetCurrentValue(Vector2.one * currentValues);
+
+		/// <summary>
+		/// Sets the current value of the spring.
+		/// </summary>
+		/// <param name="currentValues">The new current value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetCurrentValue(Vector2 currentValues)
+		{
+			springVector2.SetCurrentValue(currentValues);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the current value using a single float for all axes.
+		/// </summary>
+		/// <param name="currentValues">The current value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetCurrentValue(float currentValues) => SetCurrentValue(Vector2.one * currentValues);
+
 		public Vector2 GetVelocity() => springVector2.GetVelocity();
-		public void SetVelocity(Vector2 velocity) => springVector2.SetVelocity(velocity);
-		public void SetVelocity(float velocity) => SetVelocity(Vector2.one * velocity);
-		public void AddVelocity(Vector2 velocityToAdd) =>	springVector2.AddVelocity(velocityToAdd);
+
+		/// <summary>
+		/// Sets the velocity of the spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetVelocity(Vector2 velocity)
+		{
+			springVector2.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the velocity using a single float for all axes.
+		/// </summary>
+		/// <param name="velocity">The velocity for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetVelocity(float velocity) => SetVelocity(Vector2.one * velocity);
+
+		/// <summary>
+		/// Adds velocity to the current spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent AddVelocity(Vector2 velocityToAdd)
+		{
+			springVector2.AddVelocity(velocityToAdd);
+			return this;
+		}
 		public Vector2 GetForce() => springVector2.GetForce();
-		public void SetForce(Vector2 force) => springVector2.SetForce(force);
-		public void SetForce(float force) => SetForce(Vector2.one * force);
+		/// <summary>
+		/// Sets the force values.
+		/// </summary>
+		/// <param name="force">The force vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetForce(Vector2 force)
+		{
+			springVector2.SetForce(force);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the force using a single float for all axes.
+		/// </summary>
+		/// <param name="force">The force for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetForce(float force) => SetForce(Vector2.one * force);
+
 		public Vector2 GetDrag() => springVector2.GetDrag();
-		public void SetDrag(Vector2 drag) => springVector2.SetDrag(drag);
-		public void SetDrag(float drag) => SetDrag(Vector2.one * drag);
+
+		/// <summary>
+		/// Sets the drag values.
+		/// </summary>
+		/// <param name="drag">The drag vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetDrag(Vector2 drag)
+		{
+			springVector2.SetDrag(drag);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the drag using a single float for all axes.
+		/// </summary>
+		/// <param name="drag">The drag for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetDrag(float drag) => SetDrag(Vector2.one * drag);
 		public float GetCommonForce() => springVector2.GetCommonForce();
 		public float GetCommonDrag() => springVector2.GetCommonDrag();
 		public void SetCommonForce(float force)
@@ -49,8 +140,8 @@ namespace USpring.Components
 		public void SetClampCurrentValues(bool clampTargetX, bool clampTargetY) => springVector2.SetClampCurrentValues(clampTargetX, clampTargetY);
 		public void SetClampTarget(bool clampTargetX, bool clampTargetY) => springVector2.SetClampTarget(clampTargetX, clampTargetY);
 		public void StopSpringOnClamp(bool stopX, bool stopY) => springVector2.StopSpringOnClamp(stopX, stopY);
-		
-		
+
+
 		protected override void RegisterSprings()
 		{
 			RegisterSpring(springVector2);
