@@ -5,7 +5,7 @@ using USpring.Core;
 
 namespace USpring.Components
 {
-	[AddComponentMenu("Ludo/USpring/Components/Transform Spring")] 
+	[AddComponentMenu("Ludo/USpring/Components/Transform Spring")]
 	public partial class TransformSpringComponent : SpringComponent
 	{
 		public enum SpaceType
@@ -13,7 +13,7 @@ namespace USpring.Components
 			WorldSpace,
 			LocalSpace,
 		}
-		
+
 		public SpaceType spaceType;
 
 		[SerializeField] protected SpringVector3 positionSpring = new SpringVector3();
@@ -30,25 +30,93 @@ namespace USpring.Components
 		private Vector3 positionTarget;
 		private Vector3 scaleTarget;
 		private Quaternion rotationTarget;
-		
-		
-		
+
+
+
 		public SpringVector3 PositionSpring => positionSpring;
 		public SpringRotation RotationSpring => rotationSpring;
 		public SpringVector3 ScaleSpring => scaleSpring;
 		public SpringEvents PositionEvents => positionSpring.springEvents;
 
 		public Vector3 GetTargetPosition() => positionSpring.GetTarget();
-		public void SetTargetPosition(Vector3 target) => positionSpring.SetTarget(target);
-		public void SetTargetPosition(float target) => SetTargetPosition(Vector3.one * target);
+		/// <summary>
+		/// Sets the target position that the spring will move towards.
+		/// </summary>
+		/// <param name="target">The new target position.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetPosition(Vector3 target)
+		{
+			positionSpring.SetTarget(target);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the target position using a single float for all axes.
+		/// </summary>
+		/// <param name="target">The target value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetTargetPosition(float target) => SetTargetPosition(Vector3.one * target);
+
 		public Vector3 GetCurrentValuePosition() => positionSpring.GetCurrentValue();
-		public void SetCurrentValuePosition(Vector3 currentValues) => positionSpring.SetCurrentValue(currentValues);
-		public void SetCurrentValuePosition(float currentValues) => SetCurrentValuePosition(Vector3.one * currentValues);
+
+		/// <summary>
+		/// Sets the current position of the spring.
+		/// </summary>
+		/// <param name="currentValues">The new current position.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValuePosition(Vector3 currentValues)
+		{
+			positionSpring.SetCurrentValue(currentValues);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the current position using a single float for all axes.
+		/// </summary>
+		/// <param name="currentValues">The current value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetCurrentValuePosition(float currentValues) => SetCurrentValuePosition(Vector3.one * currentValues);
+
 		public Vector3 GetVelocityPosition() => positionSpring.GetVelocity();
-		public void SetVelocityPosition(Vector3 velocity) => positionSpring.SetVelocity(velocity);
-		public void SetVelocityPosition(float velocity) => SetVelocityPosition(Vector3.one * velocity);
-		public void AddVelocityPosition(Vector3 velocityToAdd) =>	positionSpring.AddVelocity(velocityToAdd);
-		public void ReachEquilibriumPosition() => positionSpring.ReachEquilibrium();
+
+		/// <summary>
+		/// Sets the velocity of the position spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetVelocityPosition(Vector3 velocity)
+		{
+			positionSpring.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the velocity using a single float for all axes.
+		/// </summary>
+		/// <param name="velocity">The velocity for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent SetVelocityPosition(float velocity) => SetVelocityPosition(Vector3.one * velocity);
+
+		/// <summary>
+		/// Adds velocity to the current position spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent AddVelocityPosition(Vector3 velocityToAdd)
+		{
+			positionSpring.AddVelocity(velocityToAdd);
+			return this;
+		}
+
+		/// <summary>
+		/// Immediately sets the position spring to its target value and stops all motion.
+		/// </summary>
+		/// <returns>This component instance for method chaining.</returns>
+		public TransformSpringComponent ReachEquilibriumPosition()
+		{
+			positionSpring.ReachEquilibrium();
+			return this;
+		}
 		public Vector3 GetForcePosition() => positionSpring.GetForce();
 		public void SetForcePosition(Vector3 force) => positionSpring.SetForce(force);
 		public void SetForcePosition(float force) => SetForcePosition(Vector3.one * force);
@@ -79,7 +147,7 @@ namespace USpring.Components
 		public void SetClampCurrentValuesPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => positionSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
 		public void SetClampTargetPosition(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => positionSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
 		public void StopSpringOnClampPosition(bool stopX, bool stopY, bool stopZ) => positionSpring.StopSpringOnClamp(stopX, stopY, stopZ);
-		
+
 		public SpringEvents ScaleEvents => scaleSpring.springEvents;
 		public Vector3 GetTargetScale() => scaleSpring.GetTarget();
 		public void SetTargetScale(Vector3 target) => scaleSpring.SetTarget(target);
@@ -122,7 +190,7 @@ namespace USpring.Components
 		public void SetClampCurrentValuesScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => scaleSpring.SetClampCurrentValues(clampTargetX, clampTargetY, clampTargetZ);
 		public void SetClampTargetScale(bool clampTargetX, bool clampTargetY, bool clampTargetZ) => scaleSpring.SetClampTarget(clampTargetX, clampTargetY, clampTargetZ);
 		public void StopSpringOnClampScale(bool stopX, bool stopY, bool stopZ) => scaleSpring.StopSpringOnClamp(stopX, stopY, stopZ);
-		
+
 		public SpringEvents RotationEvents => rotationSpring.springEvents;
 		public Quaternion GetTargetRotation() => rotationSpring.GetTarget();
 		public void SetTargetRotation(Quaternion targetQuaternion)
@@ -157,7 +225,7 @@ namespace USpring.Components
 			SetCommonForceRotation(force);
 			SetCommonDragRotation(drag);
 		}
-		
+
 
 		protected override void RegisterSprings()
 		{
@@ -287,7 +355,7 @@ namespace USpring.Components
 		{
 			scaleSpring.SetTarget(followerTransform.localScale);
 		}
-		
+
 
 		private void Start()
 		{
@@ -440,10 +508,10 @@ namespace USpring.Components
 				AddErrorReason($"{gameObject.name} followerTransform cannot be null");
 				res = false;
 			}
-			
+
 			return res;
 		}
-		
+
 		#region ENABLE/DISABLE SPRING PROPERTIES
 		public bool SpringPositionEnabled
 		{

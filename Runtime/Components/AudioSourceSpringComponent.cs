@@ -210,22 +210,142 @@ namespace USpring.Components
 
         #region Volume Spring API
         public float GetTargetVolume() => volumeSpring.GetTarget();
-        public void SetTargetVolume(float target) => volumeSpring.SetTarget(target);
+        /// <summary>
+        /// Sets the target volume that the spring will move towards.
+        /// </summary>
+        /// <param name="target">The new target volume.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetTargetVolume(float target)
+        {
+            volumeSpring.SetTarget(target);
+            return this;
+        }
+
         public float GetCurrentValueVolume() => volumeSpring.GetCurrentValue();
-        public void SetCurrentValueVolume(float value) => volumeSpring.SetCurrentValue(value);
+
+        /// <summary>
+        /// Sets the current volume of the spring.
+        /// </summary>
+        /// <param name="value">The new current volume.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetCurrentValueVolume(float value)
+        {
+            volumeSpring.SetCurrentValue(value);
+            return this;
+        }
+
         public float GetVelocityVolume() => volumeSpring.GetVelocity();
-        public void SetVelocityVolume(float velocity) => volumeSpring.SetVelocity(velocity);
-        public void AddVelocityVolume(float velocity) => volumeSpring.AddVelocity(velocity);
-        public void ReachEquilibriumVolume() => volumeSpring.ReachEquilibrium();
+
+        /// <summary>
+        /// Sets the velocity of the volume spring.
+        /// </summary>
+        /// <param name="velocity">The new velocity value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetVelocityVolume(float velocity)
+        {
+            volumeSpring.SetVelocity(velocity);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds velocity to the current volume spring velocity.
+        /// </summary>
+        /// <param name="velocity">The velocity to add.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent AddVelocityVolume(float velocity)
+        {
+            volumeSpring.AddVelocity(velocity);
+            return this;
+        }
+
+        /// <summary>
+        /// Immediately sets the volume spring to its target value and stops all motion.
+        /// </summary>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent ReachEquilibriumVolume()
+        {
+            volumeSpring.ReachEquilibrium();
+            return this;
+        }
         public float GetForceVolume() => volumeSpring.GetForce();
-        public void SetForceVolume(float force) => volumeSpring.SetForce(force);
+        /// <summary>
+        /// Sets the force value for the volume spring.
+        /// </summary>
+        /// <param name="force">The force value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetForceVolume(float force)
+        {
+            volumeSpring.SetForce(force);
+            return this;
+        }
+
         public float GetDragVolume() => volumeSpring.GetDrag();
-        public void SetDragVolume(float drag) => volumeSpring.SetDrag(drag);
-        public void SetMinValuesVolume(float minValue) => volumeSpring.SetMinValue(minValue);
-        public void SetMaxValuesVolume(float maxValue) => volumeSpring.SetMaxValue(maxValue);
-        public void SetClampCurrentValuesVolume(bool clamp) => volumeSpring.SetClampCurrentValue(clamp);
-        public void SetClampTargetVolume(bool clamp) => volumeSpring.SetClampTarget(clamp);
-        public void StopSpringOnClampVolume(bool stop) => volumeSpring.SetStopOnClamp(stop);
+
+        /// <summary>
+        /// Sets the drag value for the volume spring.
+        /// </summary>
+        /// <param name="drag">The drag value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetDragVolume(float drag)
+        {
+            volumeSpring.SetDrag(drag);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the minimum value for volume clamping.
+        /// </summary>
+        /// <param name="minValue">The minimum value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetMinValuesVolume(float minValue)
+        {
+            volumeSpring.SetMinValue(minValue);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the maximum value for volume clamping.
+        /// </summary>
+        /// <param name="maxValue">The maximum value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetMaxValuesVolume(float maxValue)
+        {
+            volumeSpring.SetMaxValue(maxValue);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to clamp the current volume value.
+        /// </summary>
+        /// <param name="clamp">Whether to clamp the current value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetClampCurrentValuesVolume(bool clamp)
+        {
+            volumeSpring.SetClampCurrentValue(clamp);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to clamp the target volume value.
+        /// </summary>
+        /// <param name="clamp">Whether to clamp the target value.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent SetClampTargetVolume(bool clamp)
+        {
+            volumeSpring.SetClampTarget(clamp);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets whether to stop the volume spring when clamping occurs.
+        /// </summary>
+        /// <param name="stop">Whether to stop on clamp.</param>
+        /// <returns>This component instance for method chaining.</returns>
+        public AudioSourceSpringComponent StopSpringOnClampVolume(bool stop)
+        {
+            volumeSpring.SetStopOnClamp(stop);
+            return this;
+        }
         public float GetCommonForceVolume() => volumeSpring.GetCommonForce();
         public float GetCommonDragVolume() => volumeSpring.GetCommonDrag();
         public void SetCommonForceVolume(float force)

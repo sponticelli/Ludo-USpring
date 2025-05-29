@@ -118,28 +118,114 @@ namespace USpring.Components
 		public Vector2SpringComponent SetDrag(float drag) => SetDrag(Vector2.one * drag);
 		public float GetCommonForce() => springVector2.GetCommonForce();
 		public float GetCommonDrag() => springVector2.GetCommonDrag();
-		public void SetCommonForce(float force)
+		/// <summary>
+		/// Sets the common force (stiffness) value.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetCommonForce(float force)
 		{
 			springVector2.SetCommonForceAndDrag(true);
 			springVector2.SetCommonForce(force);
+			return this;
 		}
-		public void SetCommonDrag(float drag)
+
+		/// <summary>
+		/// Sets the common drag (damping) value.
+		/// </summary>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetCommonDrag(float drag)
 		{
 			springVector2.SetCommonForceAndDrag(true);
 			springVector2.SetCommonDrag(drag);
+			return this;
 		}
-		public void SetCommonForceAndDrag(float force, float drag)
+
+		/// <summary>
+		/// Sets both common force and drag values.
+		/// </summary>
+		/// <param name="force">The force value.</param>
+		/// <param name="drag">The drag value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetCommonForceAndDrag(float force, float drag)
 		{
 			SetCommonForce(force);
 			SetCommonDrag(drag);
+			return this;
 		}
-		public void SetMinValues(Vector2 minValue) => springVector2.SetMinValue(minValue);
-		public void SetMinValues(float minValue) => SetMinValues(Vector2.one * minValue);
-		public void SetMaxValues(Vector2 maxValue) => springVector2.SetMaxValues(maxValue);
-		public void SetMaxValues(float maxValue) => SetMaxValues(Vector2.one * maxValue);
-		public void SetClampCurrentValues(bool clampTargetX, bool clampTargetY) => springVector2.SetClampCurrentValues(clampTargetX, clampTargetY);
-		public void SetClampTarget(bool clampTargetX, bool clampTargetY) => springVector2.SetClampTarget(clampTargetX, clampTargetY);
-		public void StopSpringOnClamp(bool stopX, bool stopY) => springVector2.StopSpringOnClamp(stopX, stopY);
+
+		/// <summary>
+		/// Sets the minimum values for clamping.
+		/// </summary>
+		/// <param name="minValue">The minimum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetMinValues(Vector2 minValue)
+		{
+			springVector2.SetMinValue(minValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the minimum values using a single float for all axes.
+		/// </summary>
+		/// <param name="minValue">The minimum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetMinValues(float minValue) => SetMinValues(Vector2.one * minValue);
+
+		/// <summary>
+		/// Sets the maximum values for clamping.
+		/// </summary>
+		/// <param name="maxValue">The maximum values.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetMaxValues(Vector2 maxValue)
+		{
+			springVector2.SetMaxValues(maxValue);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the maximum values using a single float for all axes.
+		/// </summary>
+		/// <param name="maxValue">The maximum value for all axes.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetMaxValues(float maxValue) => SetMaxValues(Vector2.one * maxValue);
+
+		/// <summary>
+		/// Sets clamping for current values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetClampCurrentValues(bool clampTargetX, bool clampTargetY)
+		{
+			springVector2.SetClampCurrentValues(clampTargetX, clampTargetY);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets clamping for target values per axis.
+		/// </summary>
+		/// <param name="clampTargetX">Clamp X axis.</param>
+		/// <param name="clampTargetY">Clamp Y axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent SetClampTarget(bool clampTargetX, bool clampTargetY)
+		{
+			springVector2.SetClampTarget(clampTargetX, clampTargetY);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets stop on clamp per axis.
+		/// </summary>
+		/// <param name="stopX">Stop on clamp X axis.</param>
+		/// <param name="stopY">Stop on clamp Y axis.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public Vector2SpringComponent StopSpringOnClamp(bool stopX, bool stopY)
+		{
+			springVector2.StopSpringOnClamp(stopX, stopY);
+			return this;
+		}
 
 
 		protected override void RegisterSprings()

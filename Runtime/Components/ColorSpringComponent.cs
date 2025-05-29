@@ -13,31 +13,107 @@ namespace USpring.Components
 		[SerializeField] private bool autoUpdatedObjectIsRenderer = true;
 		[SerializeField] private Renderer autoUpdatedRenderer;
 		[SerializeField] private Graphic autoUpdatedUiGraphic;
-		
+
 		public SpringEvents Events => colorSpring.springEvents;
 		public Color GetTarget() => colorSpring.GetTarget();
-		public void SetTarget(Color target) => colorSpring.SetTarget(target);
+		/// <summary>
+		/// Sets the target color that the spring will move towards.
+		/// </summary>
+		/// <param name="target">The new target color.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetTarget(Color target)
+		{
+			colorSpring.SetTarget(target);
+			return this;
+		}
+
 		public Color GetCurrentValue() => colorSpring.GetCurrentValue();
-		public void SetCurrentValue(Color currentValues)
+
+		/// <summary>
+		/// Sets the current color of the spring.
+		/// </summary>
+		/// <param name="currentValues">The new current color.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetCurrentValue(Color currentValues)
 		{
 			colorSpring.SetCurrentValue(currentValues);
 			SetCurrentValueInternal(currentValues);
+			return this;
 		}
+
 		public Vector4 GetVelocity() => colorSpring.GetVelocity();
-		public void SetVelocity(Vector4 velocity) => colorSpring.SetVelocity(velocity);
-		public void SetVelocity(float velocity) => SetVelocity(Vector4.one * velocity);
-		public void AddVelocity(Vector4 velocityToAdd) => colorSpring.AddVelocity(velocityToAdd);
+
+		/// <summary>
+		/// Sets the velocity of the color spring.
+		/// </summary>
+		/// <param name="velocity">The new velocity value.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetVelocity(Vector4 velocity)
+		{
+			colorSpring.SetVelocity(velocity);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the velocity using a single float for all color channels.
+		/// </summary>
+		/// <param name="velocity">The velocity for all channels.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetVelocity(float velocity) => SetVelocity(Vector4.one * velocity);
+
+		/// <summary>
+		/// Adds velocity to the current color spring velocity.
+		/// </summary>
+		/// <param name="velocityToAdd">The velocity to add.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent AddVelocity(Vector4 velocityToAdd)
+		{
+			colorSpring.AddVelocity(velocityToAdd);
+			return this;
+		}
 		public override void ReachEquilibrium()
 		{
 			base.ReachEquilibrium();
 			ReachEquilibriumInternal();
 		}
 		public Vector4 GetForce() => colorSpring.GetForce();
-		public void SetForce(Vector4 force) => colorSpring.SetForce(force);
-		public void SetForce(float force) => SetForce(Vector4.one * force);
+		/// <summary>
+		/// Sets the force values for the color spring.
+		/// </summary>
+		/// <param name="force">The force vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetForce(Vector4 force)
+		{
+			colorSpring.SetForce(force);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the force using a single float for all color channels.
+		/// </summary>
+		/// <param name="force">The force for all channels.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetForce(float force) => SetForce(Vector4.one * force);
+
 		public Vector4 GetDrag() => colorSpring.GetDrag();
-		public void SetDrag(Vector4 drag) => colorSpring.SetDrag(drag);
-		public void SetDrag(float drag) => SetDrag(Vector4.one * drag);
+
+		/// <summary>
+		/// Sets the drag values for the color spring.
+		/// </summary>
+		/// <param name="drag">The drag vector.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetDrag(Vector4 drag)
+		{
+			colorSpring.SetDrag(drag);
+			return this;
+		}
+
+		/// <summary>
+		/// Sets the drag using a single float for all color channels.
+		/// </summary>
+		/// <param name="drag">The drag for all channels.</param>
+		/// <returns>This component instance for method chaining.</returns>
+		public ColorSpringComponent SetDrag(float drag) => SetDrag(Vector4.one * drag);
 		public float GetCommonForce() => colorSpring.GetCommonForce();
 		public float GetCommonDrag() => colorSpring.GetCommonDrag();
 		public void SetCommonForce(float force)
@@ -60,8 +136,8 @@ namespace USpring.Components
 		public void SetClampCurrentValues(bool clampR, bool clampG, bool clampB, bool clampA) => colorSpring.SetClampCurrentValues(clampR, clampG, clampB, clampA);
 		public void SetClampTarget(bool clampR, bool clampG, bool clampB, bool clampA) => colorSpring.SetClampTarget(clampR, clampG, clampB, clampA);
 		public void StopSpringOnClamp(bool stopR, bool stopG, bool stopB, bool stopA) => colorSpring.StopSpringOnClamp(stopR, stopG, stopB, stopA);
-		
-		
+
+
 		private Color GetDefaultColor()
 		{
 			Color res = Color.white;
@@ -167,7 +243,7 @@ namespace USpring.Components
 			{
 				autoUpdatedUiGraphic = GetComponent<Graphic>();
 			}
-			
+
 			colorSpring.commonForceAndDrag = true;
 			colorSpring.commonForce = 50f;
 			colorSpring.commonDrag = 10f;
@@ -190,7 +266,7 @@ namespace USpring.Components
 		{
 			autoUpdate = false;
 		}
-		
+
 		public void SetAutoUpdateToTrue(bool isRenderer, GameObject autoUpdatedObject)
 		{
 			autoUpdate = true;
