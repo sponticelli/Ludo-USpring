@@ -1,168 +1,353 @@
 ﻿using UnityEngine;
 using USpring.Core;
+using System.Collections.Generic;
 
 namespace USpring.Components
 {
-	[AddComponentMenu("Ludo/USpring/Components/Audio Source Spring")]
-	public partial class AudioSourceSpringComponent : SpringComponent
-	{
-        [SerializeField] private AudioSource autoUpdatedAudioSource;
+    /// <summary>
+    /// Improved AudioSource spring component that manages multiple springs for volume and pitch.
+    /// Demonstrates the new architecture with reduced code duplication and better validation.
+    /// </summary>
+    [AddComponentMenu("Ludo/USpring/Components/Audio Source Spring")]
+    [RequireComponent(typeof(AudioSource))]
+    public class AudioSourceSpringComponent : SpringComponent
+    {
+        [Header("Audio Source")]
+        [SerializeField] private AudioSource audioSource;
 
-		[SerializeField] private SpringFloat volumeSpring = new SpringFloat();
-		[SerializeField] private SpringFloat pitchSpring = new SpringFloat();
+        [Header("Volume Spring")]
+        [SerializeField] private SpringFloat volumeSpring = new SpringFloat();
+        [SerializeField] private bool enableVolumeSpring = true;
 
-		public SpringEvents VolumeEvents => volumeSpring.springEvents;
-		public float GetTargetVolume() => volumeSpring.GetTarget();
-		public void SetTargetVolume(float target) => volumeSpring.SetTarget(target);
-		public float GetCurrentValueVolume() => volumeSpring.GetCurrentValue();
-		public void SetCurrentValueVolume(float currentValues) => volumeSpring.SetCurrentValue(currentValues);
-		public float GetVelocityVolume() => volumeSpring.GetVelocity();
-		public void SetVelocityVolume(float velocity) => volumeSpring.SetVelocity(velocity);
-		public void AddVelocityVolume(float velocityToAdd) =>	volumeSpring.AddVelocity(velocityToAdd);
-		public void ReachEquilibriumVolume() => volumeSpring.ReachEquilibrium();
-		public float GetForceVolume() => volumeSpring.GetForce();
-		public void SetForceVolume(float force) => volumeSpring.SetForce(force);
-		public float GetDragVolume() => volumeSpring.GetDrag();
-		public void SetDragVolume(float drag) => volumeSpring.SetDrag(drag);
-		public void SetMinValuesVolume(float minValue) => volumeSpring.SetMinValue(minValue);
-		public void SetMaxValuesVolume(float maxValue) => volumeSpring.SetMaxValue(maxValue);
-		public void SetClampCurrentValuesVolume(bool clamp) => volumeSpring.SetClampCurrentValue(clamp);
-		public void SetClampTargetVolume(bool clamp) => volumeSpring.SetClampTarget(clamp);
-		public void StopSpringOnClampVolume(bool stop) => volumeSpring.SetStopOnClamp(stop);
-		public float GetCommonForceVolume() => volumeSpring.GetCommonForce();
-		public float GetCommonDragVolume() => volumeSpring.GetCommonDrag();
-		public void SetCommonForceVolume(float force)
-		{
-			volumeSpring.SetCommonForceAndDrag(true);
-			volumeSpring.SetCommonForce(force);
-		}
-		public void SetCommonDragVolume(float drag)
-		{
-			volumeSpring.SetCommonForceAndDrag(true);
-			volumeSpring.SetCommonDrag(drag);
-		}
-		public void SetCommonForceAndDragVolume(float force, float drag)
-		{
-			SetCommonForceVolume(force);
-			SetCommonDragVolume(drag);
-		}
-		
-		
-		public SpringEvents PitchEvents => pitchSpring.springEvents;
-		public float GetTargetPitch() => pitchSpring.GetTarget();
-		public void SetTargetPitch(float target) => pitchSpring.SetTarget(target);
-		public float GetCurrentValuePitch() => pitchSpring.GetCurrentValue();
-		public void SetCurrentValuePitch(float currentValues) => pitchSpring.SetCurrentValue(currentValues);
-		public float GetVelocityPitch() => pitchSpring.GetVelocity();
-		public void SetVelocityPitch(float velocity) => pitchSpring.SetVelocity(velocity);
-		public void AddVelocityPitch(float velocityToAdd) =>	pitchSpring.AddVelocity(velocityToAdd);
-		public void ReachEquilibriumPitch() => pitchSpring.ReachEquilibrium();
-		public float GetForcePitch() => pitchSpring.GetForce();
-		public void SetForcePitch(float force) => pitchSpring.SetForce(force);
-		public float GetDragPitch() => pitchSpring.GetDrag();
-		public void SetDragPitch(float drag) => pitchSpring.SetDrag(drag);
-		public void SetMinValuesPitch(float minValue) => pitchSpring.SetMinValue(minValue);
-		public void SetMaxValuesPitch(float maxValue) => pitchSpring.SetMaxValue(maxValue);
-		public void SetClampCurrentValuesPitch(bool clamp) => pitchSpring.SetClampCurrentValue(clamp);
-		public void SetClampTargetPitch(bool clamp) => pitchSpring.SetClampTarget(clamp);
-		public void StopSpringOnClampPitch(bool stop) => pitchSpring.SetStopOnClamp(stop);
-		public float GetCommonForcePitch() => pitchSpring.GetCommonForce();
-		public float GetCommonDragPitch() => pitchSpring.GetCommonDrag();
-		public void SetCommonForcePitch(float force)
-		{
-			pitchSpring.SetCommonForceAndDrag(true);
-			pitchSpring.SetCommonForce(force);
-		}
-		public void SetCommonDragPitch(float drag)
-		{
-			pitchSpring.SetCommonForceAndDrag(true);
-			pitchSpring.SetCommonDrag(drag);
-		}
-		public void SetCommonForceAndDragPitch(float force, float drag)
-		{
-			SetCommonForcePitch(force);
-			SetCommonDragPitch(drag);
-		}
-		
-		
-		protected override void RegisterSprings()
-		{
-			RegisterSpring(volumeSpring);
-			RegisterSpring(pitchSpring);
-		}
+        [Header("Pitch Spring")]
+        [SerializeField] private SpringFloat pitchSpring = new SpringFloat();
+        [SerializeField] private bool enablePitchSpring = true;
 
-		protected override void SetCurrentValueByDefault()
-		{
-			SetCurrentValueVolume(autoUpdatedAudioSource.volume);
-			SetCurrentValuePitch(autoUpdatedAudioSource.pitch);
-		}
+        [Header("Spring Configuration")]
+        [SerializeField] private bool useCommonSettings = true;
+        [SerializeField] private float commonForce = 150f;
+        [SerializeField] private float commonDrag = 10f;
 
-		protected override void SetTargetByDefault()
-		{
-			SetTargetVolume(autoUpdatedAudioSource.volume);
-			SetTargetPitch(autoUpdatedAudioSource.pitch);
-		}
+        [Header("Volume Clamping")]
+        [SerializeField] private bool clampVolume = true;
+        [SerializeField] private float minVolume = 0f;
+        [SerializeField] private float maxVolume = 1f;
 
-		public void Update()
-		{
-			if (!initialized) { return; }
+        [Header("Pitch Clamping")]
+        [SerializeField] private bool clampPitch = true;
+        [SerializeField] private float minPitch = 0.1f;
+        [SerializeField] private float maxPitch = 3f;
 
-			UpdateAudioSource();
-		}
+        /// <summary>
+        /// Gets the volume spring events.
+        /// </summary>
+        public SpringEvents VolumeEvents => volumeSpring.springEvents;
 
-		private void UpdateAudioSource()
-		{
-			autoUpdatedAudioSource.volume = volumeSpring.GetCurrentValue();
-			autoUpdatedAudioSource.pitch = pitchSpring.GetCurrentValue();
-		}
+        /// <summary>
+        /// Gets the pitch spring events.
+        /// </summary>
+        public SpringEvents PitchEvents => pitchSpring.springEvents;
 
-		public override bool IsValidSpringComponent()
-		{
-			bool res = true;
+        /// <summary>
+        /// Gets or sets the AudioSource component.
+        /// </summary>
+        public AudioSource AudioSource
+        {
+            get => audioSource;
+            set
+            {
+                audioSource = value;
+                InvalidateValidation();
+            }
+        }
 
-			if (autoUpdatedAudioSource == null)
-			{
-				AddErrorReason($"{gameObject.name} autoUpdatedAudioSource is null.");
-				res = false;
-			}
+        private void Awake()
+        {
+            // Auto-assign AudioSource if not set
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+        }
 
-			return res;
-		}
-		
-		#region ENABLE/DISABLE SPRING PROPERTIES
-		public SpringFloat VolumeSpring
-		{
-			get => volumeSpring;
-			set => volumeSpring = value;
-		}
+        public override void Initialize()
+        {
+            ConfigureSprings();
+            base.Initialize();
+        }
 
-		public SpringFloat PitchSpring
-		{
-			get => pitchSpring;
-			set => pitchSpring = value;
-		}
-		#endregion
+        private void ConfigureSprings()
+        {
+            // Configure volume spring
+            if (enableVolumeSpring)
+            {
+                ConfigureVolumeSpring();
+            }
+
+            // Configure pitch spring
+            if (enablePitchSpring)
+            {
+                ConfigurePitchSpring();
+            }
+        }
+
+        private void ConfigureVolumeSpring()
+        {
+            if (useCommonSettings)
+            {
+                volumeSpring.SetCommonForceAndDrag(true);
+                volumeSpring.SetCommonForce(commonForce);
+                volumeSpring.SetCommonDrag(commonDrag);
+            }
+
+            if (clampVolume)
+            {
+                volumeSpring.SetClampingEnabled(true);
+                volumeSpring.SetMinValue(minVolume);
+                volumeSpring.SetMaxValue(maxVolume);
+                volumeSpring.SetClampCurrentValue(true);
+                volumeSpring.SetClampTarget(true);
+            }
+        }
+
+        private void ConfigurePitchSpring()
+        {
+            if (useCommonSettings)
+            {
+                pitchSpring.SetCommonForceAndDrag(true);
+                pitchSpring.SetCommonForce(commonForce);
+                pitchSpring.SetCommonDrag(commonDrag);
+            }
+
+            if (clampPitch)
+            {
+                pitchSpring.SetClampingEnabled(true);
+                pitchSpring.SetMinValue(minPitch);
+                pitchSpring.SetMaxValue(maxPitch);
+                pitchSpring.SetClampCurrentValue(true);
+                pitchSpring.SetClampTarget(true);
+            }
+        }
+
+        protected override void RegisterSprings()
+        {
+            if (enableVolumeSpring)
+            {
+                RegisterSpring(volumeSpring);
+            }
+
+            if (enablePitchSpring)
+            {
+                RegisterSpring(pitchSpring);
+            }
+        }
+
+        protected override void SetCurrentValueByDefault()
+        {
+            if (audioSource != null)
+            {
+                if (enableVolumeSpring)
+                {
+                    volumeSpring.SetCurrentValue(audioSource.volume);
+                }
+
+                if (enablePitchSpring)
+                {
+                    pitchSpring.SetCurrentValue(audioSource.pitch);
+                }
+            }
+        }
+
+        protected override void SetTargetByDefault()
+        {
+            if (audioSource != null)
+            {
+                if (enableVolumeSpring)
+                {
+                    volumeSpring.SetTarget(audioSource.volume);
+                }
+
+                if (enablePitchSpring)
+                {
+                    pitchSpring.SetTarget(audioSource.pitch);
+                }
+            }
+        }
+
+        public override bool IsValidSpringComponent()
+        {
+            if (audioSource == null)
+            {
+                AddErrorReason("AudioSource is null");
+                return false;
+            }
+
+            return true;
+        }
+
+        public void Update()
+        {
+            if (!initialized || audioSource == null)
+            {
+                return;
+            }
+
+            UpdateAudioSource();
+        }
+
+        private void UpdateAudioSource()
+        {
+            if (enableVolumeSpring)
+            {
+                audioSource.volume = volumeSpring.GetCurrentValue();
+            }
+
+            if (enablePitchSpring)
+            {
+                audioSource.pitch = pitchSpring.GetCurrentValue();
+            }
+        }
+
+        #region Volume Spring API
+        public float GetTargetVolume() => volumeSpring.GetTarget();
+        public void SetTargetVolume(float target) => volumeSpring.SetTarget(target);
+        public float GetCurrentValueVolume() => volumeSpring.GetCurrentValue();
+        public void SetCurrentValueVolume(float value) => volumeSpring.SetCurrentValue(value);
+        public float GetVelocityVolume() => volumeSpring.GetVelocity();
+        public void SetVelocityVolume(float velocity) => volumeSpring.SetVelocity(velocity);
+        public void AddVelocityVolume(float velocity) => volumeSpring.AddVelocity(velocity);
+        public void ReachEquilibriumVolume() => volumeSpring.ReachEquilibrium();
+        public float GetForceVolume() => volumeSpring.GetForce();
+        public void SetForceVolume(float force) => volumeSpring.SetForce(force);
+        public float GetDragVolume() => volumeSpring.GetDrag();
+        public void SetDragVolume(float drag) => volumeSpring.SetDrag(drag);
+        public void SetMinValuesVolume(float minValue) => volumeSpring.SetMinValue(minValue);
+        public void SetMaxValuesVolume(float maxValue) => volumeSpring.SetMaxValue(maxValue);
+        public void SetClampCurrentValuesVolume(bool clamp) => volumeSpring.SetClampCurrentValue(clamp);
+        public void SetClampTargetVolume(bool clamp) => volumeSpring.SetClampTarget(clamp);
+        public void StopSpringOnClampVolume(bool stop) => volumeSpring.SetStopOnClamp(stop);
+        public float GetCommonForceVolume() => volumeSpring.GetCommonForce();
+        public float GetCommonDragVolume() => volumeSpring.GetCommonDrag();
+        public void SetCommonForceVolume(float force)
+        {
+            volumeSpring.SetCommonForceAndDrag(true);
+            volumeSpring.SetCommonForce(force);
+        }
+        public void SetCommonDragVolume(float drag)
+        {
+            volumeSpring.SetCommonForceAndDrag(true);
+            volumeSpring.SetCommonDrag(drag);
+        }
+        public void SetCommonForceAndDragVolume(float force, float drag)
+        {
+            SetCommonForceVolume(force);
+            SetCommonDragVolume(drag);
+        }
+        #endregion
+
+        #region Pitch Spring API
+        public float GetTargetPitch() => pitchSpring.GetTarget();
+        public void SetTargetPitch(float target) => pitchSpring.SetTarget(target);
+        public float GetCurrentValuePitch() => pitchSpring.GetCurrentValue();
+        public void SetCurrentValuePitch(float value) => pitchSpring.SetCurrentValue(value);
+        public float GetVelocityPitch() => pitchSpring.GetVelocity();
+        public void SetVelocityPitch(float velocity) => pitchSpring.SetVelocity(velocity);
+        public void AddVelocityPitch(float velocity) => pitchSpring.AddVelocity(velocity);
+        public void ReachEquilibriumPitch() => pitchSpring.ReachEquilibrium();
+        public float GetForcePitch() => pitchSpring.GetForce();
+        public void SetForcePitch(float force) => pitchSpring.SetForce(force);
+        public float GetDragPitch() => pitchSpring.GetDrag();
+        public void SetDragPitch(float drag) => pitchSpring.SetDrag(drag);
+        public void SetMinValuesPitch(float minValue) => pitchSpring.SetMinValue(minValue);
+        public void SetMaxValuesPitch(float maxValue) => pitchSpring.SetMaxValue(maxValue);
+        public void SetClampCurrentValuesPitch(bool clamp) => pitchSpring.SetClampCurrentValue(clamp);
+        public void SetClampTargetPitch(bool clamp) => pitchSpring.SetClampTarget(clamp);
+        public void StopSpringOnClampPitch(bool stop) => pitchSpring.SetStopOnClamp(stop);
+        public float GetCommonForcePitch() => pitchSpring.GetCommonForce();
+        public float GetCommonDragPitch() => pitchSpring.GetCommonDrag();
+        public void SetCommonForcePitch(float force)
+        {
+            pitchSpring.SetCommonForceAndDrag(true);
+            pitchSpring.SetCommonForce(force);
+        }
+        public void SetCommonDragPitch(float drag)
+        {
+            pitchSpring.SetCommonForceAndDrag(true);
+            pitchSpring.SetCommonDrag(drag);
+        }
+        public void SetCommonForceAndDragPitch(float force, float drag)
+        {
+            SetCommonForcePitch(force);
+            SetCommonDragPitch(drag);
+        }
+        #endregion
+
+        #region Spring Properties
+        public SpringFloat VolumeSpring
+        {
+            get => volumeSpring;
+            set => volumeSpring = value;
+        }
+
+        public SpringFloat PitchSpring
+        {
+            get => pitchSpring;
+            set => pitchSpring = value;
+        }
+        #endregion
+
+        #region Configuration API
+        public void SetCommonForceAndDrag(float force, float drag)
+        {
+            commonForce = force;
+            commonDrag = drag;
+
+            if (useCommonSettings)
+            {
+                ConfigureSprings();
+            }
+        }
+
+        public void EnableVolumeSpring(bool enable)
+        {
+            enableVolumeSpring = enable;
+            InvalidateValidation();
+        }
+
+        public void EnablePitchSpring(bool enable)
+        {
+            enablePitchSpring = enable;
+            InvalidateValidation();
+        }
+        #endregion
 
 #if UNITY_EDITOR
-		protected override void Reset()
-		{
-			base.Reset();
+        protected override void Reset()
+        {
+            base.Reset();
 
-			if(autoUpdatedAudioSource == null)
-			{
-				autoUpdatedAudioSource = GetComponent<AudioSource>();
-			}
-		}
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+        }
 
-		internal override Spring[] GetSpringsArray()
-		{
-			Spring[] res = new Spring[]
-			{
-				volumeSpring, pitchSpring
-			};
+        internal override Spring[] GetSpringsArray()
+        {
+            var springs = new List<Spring>();
 
-			return res;
-		}
+            if (enableVolumeSpring)
+            {
+                springs.Add(volumeSpring);
+            }
+
+            if (enablePitchSpring)
+            {
+                springs.Add(pitchSpring);
+            }
+
+            return springs.ToArray();
+        }
 #endif
-	}
+    }
 }
